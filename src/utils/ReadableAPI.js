@@ -11,6 +11,7 @@ export const allCategories = () =>
     .then(res => res.json())
     .then(data => data)
 
+// POSTS METHODS
 export const postsOfCategory = (category) =>
   fetch(`${api}/${category}/posts`, { headers: { 'Authorization': token }})
     .then(res => res.json())
@@ -21,7 +22,6 @@ export const allPosts = () =>
     .then(res => res.json())
     .then(data => data)
 
-// error
 export const addPost = (post) =>
   fetch(`${api}/posts`, {
     method: 'POST',
@@ -29,9 +29,9 @@ export const addPost = (post) =>
       'Authorization': token,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ id: `${Math.random().toString(36).substr(-8)}`, timestamp: `${null}`, title: `${post.title}`, body: `${post.body}`, owner: `${post.owner}`, category: `${post.category}`})
+    body: JSON.stringify({ id: `${Math.random().toString(36).substr(-8)}`, timestamp: `${Date.now()}`, title: `${post.title}`, body: `${post.body}`, author: `${post.author}`, category: `${post.category}`})
   }).then(res => res.json())
-    .then(data => data.books)
+    .then(data => data)
 
 export const postDetail = (id) =>
   fetch(`${api}/posts/${id}`, { headers: { 'Authorization': token }})
@@ -47,9 +47,8 @@ export const votePost = (id, option) =>
     },
     body: JSON.stringify({ option: `${option}` })
   }).then(res => res.json())
-    .then(data => data.books)
+    .then(data => data)
 
-// untested
 export const editPost = (post) =>
   fetch(`${api}/posts/${post.id}`, {
     method: 'PUT',
@@ -59,25 +58,31 @@ export const editPost = (post) =>
     },
     body: JSON.stringify({ title: `${post.title}`, body: `${post.body}` })
   }).then(res => res.json())
-    .then(data => data.books)
+    .then(data => data)
 
-// untested
 export const deletePost = (post) =>
   fetch(`${api}/posts/${post.id}`, {
     method: 'DELETE',
     headers: {
       'Authorization': token,
+      'Content-Type': 'application/json'
     }
-  }).then(res => res.json())
-    .then(data => data.books)
+    // Here you must use res instead of res.json()
+    /* Explanation from Slack @javi: I went to look at the code of the server, the reactnd-readable-server project they provided,
+     * and I saw there that the function that disables a post, setting the "deleted" field as "true", it returns a single value.
+     * It doesn't return an object like other functions are doing. That means, what comes as a response of the promise we're using here on the ReadableAPI is not a JSON object,
+     * it's just the postId that we deleted. We were trying to do `res.json()` and that gave us the error `Unexpected end of JSON input` —
+     * I guess that's simply because the variable `res` is not a JSON object. So, doing `res => res` works as expected, and what you get is the PostID
+     */
+    }).then(res => res)
+    .then(data => data)
 
-// untested
+// COMMENTS METHODS
 export const allComments = (post) =>
   fetch(`${api}/posts/${post.id}/comments`, { headers: { 'Authorization': token }})
     .then(res => res.json())
     .then(data => data)
 
-// untested
 export const addComment = (post, comment) =>
   fetch(`${api}/comments`, {
     method: 'POST',
@@ -85,17 +90,15 @@ export const addComment = (post, comment) =>
       'Authorization': token,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ id: `${Math.random().toString(36).substr(-8)}`, timestamp: `${null}`, body: `${comment.body}`, owner: `${comment.author}`, parentID: `${post.id}` })
+    body: JSON.stringify({ id: `${Math.random().toString(36).substr(-8)}`, timestamp: `${Date.now()}`, body: `${comment.body}`, author: `${comment.author}`, parentId: `${post.id}` })
   }).then(res => res.json())
-    .then(data => data.books)
+    .then(data => data)
 
-// untested
 export const commentDetail = (comment) =>
   fetch(`${api}/comments/${comment.id}`, { headers: { 'Authorization': token }})
     .then(res => res.json())
     .then(data => data)
 
-// untested
 export const voteComment = (comment, option) =>
   fetch(`${api}/comments/${comment.id}`, {
     method: 'POST',
@@ -105,26 +108,25 @@ export const voteComment = (comment, option) =>
     },
     body: JSON.stringify({ option: `${option}` })
   }).then(res => res.json())
-    .then(data => data.books)
+    .then(data => data)
 
-// untested
 export const editComment = (comment) =>
-  fetch(`${api}/posts/${comment.id}`, {
+  fetch(`${api}/comments/${comment.id}`, {
     method: 'PUT',
     headers: {
       'Authorization': token,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ timestamp: `${null}`, body: `${comment.body}` })
+    body: JSON.stringify({ timestamp: `${comment.timestamp}`, body: `${comment.body}` })
   }).then(res => res.json())
-    .then(data => data.books)
+    .then(data => data)
 
-// untested
 export const deleteComment = (comment) =>
-  fetch(`${api}/posts/${comment.id}`, {
+  fetch(`${api}/comments/${comment.id}`, {
     method: 'DELETE',
     headers: {
       'Authorization': token,
+      'Content-Type': 'application/json'
     }
-  }).then(res => res.json())
-    .then(data => data.books)
+  }).then(res => res)
+    .then(data => data)
