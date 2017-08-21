@@ -4,7 +4,7 @@ export const GET_ALL_CATEGORIES = 'GET_ALL_CATEGORIES'
 
 export const SELECT_CATEGORY = 'SELECT_CATEGORY'
 
-export const UPVOTE = 'UPVOTE'
+export const VOTE = 'VOTE'
 
 export function getAllCategories() {
   const allCategories = ReadableAPI.allCategories()
@@ -23,9 +23,13 @@ export function selectCategory(category) {
   }
 }
 
-export function upvote() {
+export function voteScore(id, option) {
+  // update the state in the server
+  ReadableAPI.votePost(id, option)
+  // send an action to update local state
   return {
-    type: UPVOTE,
-    option: 'upVote'
+    type: VOTE,
+    id,
+    option
   }
 }
