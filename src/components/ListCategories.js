@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { getAllCategories, selectCategory } from '../actions/actions'
+import { allCategories, selectCategory } from '../actions/actions'
 
 class ListCategories extends React.Component {
 
   // After page load, send an action to request for all categories
   componentDidMount() {
-    this.props.getAllCategories()
+    this.props.allCategories()
   }
 
   render () {
@@ -15,17 +15,21 @@ class ListCategories extends React.Component {
     const { selectCategory } = this.props
     return (
         <ul className='list-categories list-group col-sm-4'>
-          {
-            /* You have to use categories && because fetching Categories from remote server is async, the very first time component renders, `categories` is null/undefined(should've set it to empty array). After data gets back from server, everything will render.*/
-          }
           <li key='th-category' className='th-category list-group-item'>Category</li>
+          {
+            /* If you get error:"can't read property map of undefined", then use 'categories &&' to check if categories exists.
+            There may be different reasons. First reason may be because fetching Categories from remote server is async,
+            the very first time component renders, `categories` is null/undefined(should've set it to empty array).
+            After data gets back from server, everything will render.
+            The second reason may be that you may set the wrong initial state in the reducers.*/
+          }
           {/*
              1. selectCategory is not a function of this class.
              so you can't write onClick={selectCategory(category)}.
              It's passed to render() as props.
              2. only input elements has event.target.value. Others elements has innerHTML
           */}
-          {categories && categories.map( category => (
+          {categories.map( category => (
             <li
               key={category.name}
               onClick={(event)=>selectCategory(event.target.innerHTML)}
@@ -46,7 +50,7 @@ function mapStateToProps({categories}){
 
 function mapDispatchToProps(dispatch) {
   return {
-    getAllCategories: () => dispatch(getAllCategories()),
+    allCategories: () => dispatch(allCategories()),
     selectCategory: (category) => dispatch(selectCategory(category))
   }
 }

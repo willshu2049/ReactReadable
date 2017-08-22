@@ -1,15 +1,19 @@
 import * as ReadableAPI from '../utils/ReadableAPI'
 
-export const GET_ALL_CATEGORIES = 'GET_ALL_CATEGORIES'
+export const ALL_CATEGORIES = 'ALL_CATEGORIES'
 
 export const SELECT_CATEGORY = 'SELECT_CATEGORY'
 
 export const VOTE = 'VOTE'
 
-export function getAllCategories() {
+export const ALL_COMMENTS_OF_POST = 'ALL_COMMENTS_OF_POST'
+
+export const SORT_METHOD = 'SORT_METHOD'
+
+export function allCategories() {
   const allCategories = ReadableAPI.allCategories()
   return {
-    type: GET_ALL_CATEGORIES,
+    type: ALL_CATEGORIES,
     payload: allCategories
   }
 }
@@ -23,7 +27,7 @@ export function selectCategory(category) {
   }
 }
 
-export function voteScore(id, option) {
+export function votePost(id, option) {
   // update the state in the server
   ReadableAPI.votePost(id, option)
   // send an action to update local state
@@ -31,5 +35,20 @@ export function voteScore(id, option) {
     type: VOTE,
     id,
     option
+  }
+}
+
+// export function allCommentsOfPost() {
+//   const allCommentsOfPost = ReadableAPI.allCommentsOfPost()
+//   return {
+//     type: ALL_COMMENTS_OF_POST,
+//     payload: allCommentsOfPost
+//   }
+// }
+
+export function updateSortMethod(value) {
+  return {
+    type: SORT_METHOD,
+    value
   }
 }
