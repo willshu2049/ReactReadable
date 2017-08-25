@@ -22,14 +22,14 @@ export const allPosts = () =>
     .then(res => res.json())
     .then(data => data)
 
-export const addPost = (post) =>
+export const addPost = (id, timestamp, title, body, author, category) =>
   fetch(`${api}/posts`, {
     method: 'POST',
     headers: {
       'Authorization': token,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ id: `${Math.random().toString(36).substr(-8)}`, timestamp: `${Date.now()}`, title: `${post.title}`, body: `${post.body}`, author: `${post.author}`, category: `${post.category}`})
+    body: JSON.stringify({ id: `${id}`, timestamp:  `${timestamp}`, title:  `${title}`, body:  `${body}`, author:  `${author}`, category:  `${category}`})
   }).then(res => res.json())
     .then(data => data)
 

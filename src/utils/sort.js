@@ -7,5 +7,5 @@ export function sortByVote(a, b) {
 export function sortByDate(a, b) {
   const keyA = a['timestamp'];
   const keyB = b['timestamp'];
-  return (keyA < keyB) ? -1 : (keyA === keyB) ? 0 : 1
+  return (keyA < keyB) ? 1 : (keyA === keyB) ? 0 : -1
 }

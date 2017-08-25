@@ -1,10 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+
+import PostForm from './PostForm'
 
 class CreateEditView extends React.Component {
   render () {
     return (
-      <Link to='/' className='back-to-default'>Go Back</Link>
+      <div>
+        <PostForm />
+      </div>
     )
   }
 }

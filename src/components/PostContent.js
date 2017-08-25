@@ -1,7 +1,5 @@
 import React from 'react'
 
-import { Link } from 'react-router-dom'
-
 class PostContent extends React.Component {
   render () {
     const { post } = this.props

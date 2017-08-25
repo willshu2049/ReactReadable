@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { ALL_CATEGORIES, SELECT_CATEGORY, VOTE, ALL_COMMENTS_OF_POST, SORT_METHOD } from '../actions/actions'
+import { ALL_CATEGORIES, SELECT_CATEGORY, VOTE, ALL_COMMENTS_OF_POST, SORT_METHOD, ADD_POST, INPUT_CHANGE, CLEAR_POST_FORM, CATEGORY_CHANGE } from '../actions/actions'
 
 function categories(state={categories:[]}, action) {
   switch (action.type) {
@@ -38,6 +38,8 @@ function posts(state=[], action) {
           return newState1
           ```
       */
+    case ADD_POST:
+      return state
     default:
       return state
   }
@@ -61,8 +63,32 @@ function sortMethod(state='voteScore', action) {
   }
 }
 
+// The initial state or CLEAR_POST_FORM state can't be null, but can be empty string.
+function inputState(state={title:'', author:'', category:'', body:''}, action) {
+  switch (action.type) {
+    case INPUT_CHANGE:
+      return {
+        ...state,
+        // [...] is called computed property
+        [action.name]: action.value
+      }
+    case CATEGORY_CHANGE:
+      return {
+        ...state,
+        [action.name]: action.value
+      }
+    case CLEAR_POST_FORM:
+      return {
+        title:'', author:'', body:''
+      }
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   categories,
   posts,
   sortMethod,
+  inputState
 })
