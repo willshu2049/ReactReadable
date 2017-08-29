@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import PostContent from './PostContent'
 import CommentsContent from './CommentsContent'
 import VoteButton from './VoteButton'
+import DeleteButton from './DeleteButton'
 
 import { fetchPost, votePost, deletePost } from '../actions/actions'
 
@@ -37,12 +38,7 @@ class PostDetail extends React.Component {
     return (
       <div className='post-detail'>
         <Link to='/' className='back-to-default'>Go Back</Link>
-        <button
-          className='btn btn-danger float-sm-right'
-          onClick={()=>this.onDeleteClick()}
-          >
-          Delete
-        </button>
+        <DeleteButton onClickButton={()=>this.onDeleteClick()}/>
         <h4>{post.title}</h4>
         <p><span>{(new Date(Number(post.timestamp))).toString().substr(0, 25)}</span> by <span>{post.author}</span></p>
         <p>{post.body}</p>
