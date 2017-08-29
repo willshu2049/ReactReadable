@@ -1,27 +1,35 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import _ from 'lodash'
 
 import VoteButton from './VoteButton'
 
-import { selectCategory, votePost, updateSortMethod } from '../actions/actions'
+import { allPosts, votePost, updateSortMethod } from '../actions/actions'
 import { sortByVote, sortByDate} from '../utils/sort'
 
 class PostsIndex extends React.Component {
 
   // After page load, send an action to request for all posts
   componentDidMount() {
-    this.props.allPosts('All')
+    this.props.allPosts()
   }
 
   render () {
-    const { posts, votePost, sortMethod, updateSortMethod } = this.props
+    const { votePost, sortMethod, updateSortMethod } = this.props
+    let { posts } = this.props
+
+    // unobjectify posts into an array
+    posts=_.map(posts)
+
+    // delete all deleted posts
+    posts=_.filter(posts, post=>!post.deleted)
 
     // sort the posts locally in the component
     posts && (sortMethod === 'voteScore') ? posts.sort(sortByVote) : posts.sort(sortByDate)
 
     return (
-      <ul className='list-posts list-group col-sm-8'>
+      <ul className='list-posts list-group col-md-8'>
 
         <li
           key='th-posts'
@@ -37,16 +45,15 @@ class PostsIndex extends React.Component {
         {posts.map( (post) => (
           <li key={post.id} className='list-group-item'>
 
-            <Link className='post-detail' to='post-detail'><h4>{post.title}</h4></Link>
+            <Link className='post-detail' to={`/posts/${post.id}`}><h4>{post.title}</h4></Link>
 
             <p><span>{(new Date(Number(post.timestamp))).toString().substr(0, 25)}</span> by <span>{post.author}</span></p>
             <p>{post.body}</p>
             <p>
-              <scan>{post.category} </scan>
-              <scan>{post.voteScore} </scan>
+              <span>{post.category} </span>
+              <span>{post.voteScore} </span>
               <VoteButton id={post.id} option={'upVote'} onClickButton={votePost} />
               <VoteButton id={post.id} option={'downVote'} onClickButton={votePost} />
-              <span></span>
             </p>
           </li>
         ))}
@@ -65,7 +72,7 @@ function mapStateToProps({posts, sortMethod}){
 
 function mapDispatchToProps(dispatch){
   return {
-    allPosts: (category) => dispatch(selectCategory(category)),
+    allPosts: () => dispatch(allPosts()),
     votePost: (e) => dispatch(votePost(e.target.value, e.target.innerHTML)),
     updateSortMethod: (e) => dispatch(updateSortMethod(e.target.value))
   }

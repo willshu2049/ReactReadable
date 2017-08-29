@@ -6,15 +6,23 @@ export const VOTE = 'VOTE'
 export const ALL_COMMENTS_OF_POST = 'ALL_COMMENTS_OF_POST'
 export const SORT_METHOD = 'SORT_METHOD'
 export const ADD_POST = 'ADD_POST'
-export const INPUT_CHANGE = 'INPUT_CHANGE'
-export const CLEAR_POST_FORM = 'CLEAR_POST_FORM'
-export const CATEGORY_CHANGE ='CATEGORY_CHANGE'
+export const ALL_POSTS = 'ALL_POSTS'
+export const FETCH_POST = 'FETCH_POST'
+export const DELETE_POST = 'DELETE_POST'
 
 export function allCategories() {
   const allCategories = ReadableAPI.allCategories()
   return {
     type: ALL_CATEGORIES,
     payload: allCategories
+  }
+}
+
+export function allPosts() {
+  const allPosts = ReadableAPI.allPosts()
+  return {
+    type: ALL_POSTS,
+    payload: allPosts
   }
 }
 
@@ -45,36 +53,31 @@ export function updateSortMethod(value) {
   }
 }
 
-export function addPost(target){
+export function addPost(values, callback) {
   const id = Math.random().toString(36).substr(-8)
   // Date.now() produces the UTC time. Use UTC time solves "time zone" problem.
   const timestamp = Date.now()
   // update the state in the server. It seems after you go back the main page automatically updates to the new state. Is this the correct way of doing things?
-  ReadableAPI.addPost(id, timestamp, target.title.value, target.body.value, target.author.value, target.category.value)
+  const request = ReadableAPI.addPost(id, timestamp, values.title, values.body, values.author, values.category).then(callback);
+
   return {
     type: ADD_POST,
+    payload: request
   }
 }
 
-export function inputChange(name, value) {
+export function fetchPost(postID) {
+  const request = ReadableAPI.fetchPost(postID)
   return {
-    type: INPUT_CHANGE,
-    name,
-    value
+    type: FETCH_POST,
+    payload: request
   }
 }
 
-export function categoryChange(name, value) {
+export function deletePost(postID, callback) {
+  const request = ReadableAPI.deletePost(postID).then(callback)
   return {
-    type: CATEGORY_CHANGE,
-    name,
-    value
-  }
-}
-
-export function clearPostForm() {
-  return {
-    type: CLEAR_POST_FORM,
+    type: DELETE_POST,
   }
 }
 

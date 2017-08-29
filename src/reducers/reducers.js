@@ -1,5 +1,8 @@
 import { combineReducers } from 'redux'
-import { ALL_CATEGORIES, SELECT_CATEGORY, VOTE, ALL_COMMENTS_OF_POST, SORT_METHOD, ADD_POST, INPUT_CHANGE, CLEAR_POST_FORM, CATEGORY_CHANGE } from '../actions/actions'
+import { reducer as form } from 'redux-form'
+import _ from 'lodash'
+
+import { ALL_CATEGORIES, ALL_POSTS, SELECT_CATEGORY, VOTE, ALL_COMMENTS_OF_POST, SORT_METHOD, ADD_POST, FETCH_POST, DELETE_POST } from '../actions/actions'
 
 function categories(state={categories:[]}, action) {
   switch (action.type) {
@@ -10,18 +13,26 @@ function categories(state={categories:[]}, action) {
   }
 }
 
-function posts(state=[], action) {
+function posts(state={}, action) {
   switch (action.type) {
+    case ALL_POSTS:
+    console.log(action.payload)
+      return _.mapKeys(action.payload, 'id')
+    case FETCH_POST:
+      return {
+        ...state,
+        [action.payload.id]:action.payload
+      }
     case SELECT_CATEGORY:
-      return action.payload
+      return _.mapKeys(action.payload, 'id')
     case VOTE:
-      const newState=[...state]
-      return newState.map( ele => {
+      const newStateArray=_.map(state)
+      return _.mapKeys(newStateArray.map( ele => {
         if(ele.id === action.id){
           (action.option === 'upVote') ? ele.voteScore++ : ele.voteScore--
         }
         return ele
-      })
+      }), 'id')
       /* The sort() method sorts the elements of an array in place and returns the array.
           Therefore you need to use [...state] to avoid shallow comparison problem.
           However you need to use another state 'sortMethod' to keep track of sortMethod on the Main page.
@@ -39,6 +50,8 @@ function posts(state=[], action) {
           ```
       */
     case ADD_POST:
+      return state
+    case DELETE_POST:
       return state
     default:
       return state
@@ -63,32 +76,9 @@ function sortMethod(state='voteScore', action) {
   }
 }
 
-// The initial state or CLEAR_POST_FORM state can't be null, but can be empty string.
-function inputState(state={title:'', author:'', category:'', body:''}, action) {
-  switch (action.type) {
-    case INPUT_CHANGE:
-      return {
-        ...state,
-        // [...] is called computed property
-        [action.name]: action.value
-      }
-    case CATEGORY_CHANGE:
-      return {
-        ...state,
-        [action.name]: action.value
-      }
-    case CLEAR_POST_FORM:
-      return {
-        title:'', author:'', body:''
-      }
-    default:
-      return state
-  }
-}
-
 export default combineReducers({
   categories,
   posts,
   sortMethod,
-  inputState
+  form
 })

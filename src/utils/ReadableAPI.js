@@ -33,7 +33,7 @@ export const addPost = (id, timestamp, title, body, author, category) =>
   }).then(res => res.json())
     .then(data => data)
 
-export const postDetail = (postID) =>
+export const fetchPost = (postID) =>
   fetch(`${api}/posts/${postID}`, { headers: { 'Authorization': token }})
     .then(res => res.json())
     .then(data => data)
@@ -74,7 +74,7 @@ export const deletePost = (postID) =>
      * it's just the postId that we deleted. We were trying to do `res.json()` and that gave us the error `Unexpected end of JSON input` —
      * I guess that's simply because the variable `res` is not a JSON object. So, doing `res => res` works as expected, and what you get is the PostID
      */
-    }).then(res => res)
+   }).then(res => res.json)
     .then(data => data)
 
 // COMMENTS METHODS
