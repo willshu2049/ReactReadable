@@ -2,11 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
-
-import VoteButton from './VoteButton'
+import { Button, List } from 'semantic-ui-react'
 
 import { allPosts, votePost, updateSortMethod } from '../actions/actions'
-import { sortByVote, sortByDate} from '../utils/sort'
+import { sortByVote, sortByDate } from '../utils/sort'
 
 class PostsIndex extends React.Component {
 
@@ -29,36 +28,39 @@ class PostsIndex extends React.Component {
     posts && (sortMethod === 'voteScore') ? posts.sort(sortByVote) : posts.sort(sortByDate)
 
     return (
-      <ul className='list-posts list-group col-md-8'>
+      <div>
+        <Link to='/create'>Create Post</Link>
 
-        <li
-          key='th-posts'
-          className='th-posts list-group-item'>
-          <span>Posts </span>
-          <span>Sort By </span>
-          <select value={sortMethod} onChange={updateSortMethod}>
-            <option value='voteScore'>Top Score</option>
-            <option value='timestamp'>Most Recent</option>
-          </select>
-        </li>
+        <List>
 
-        {posts.map( (post) => (
-          <li key={post.id} className='list-group-item'>
+          <List.Item
+            key='th-posts'>
+            <span>Posts </span>
+            <span>Sort By </span>
+            <select value={sortMethod} onChange={updateSortMethod}>
+              <option value='voteScore'>Top Score</option>
+              <option value='timestamp'>Most Recent</option>
+            </select>
+          </List.Item>
 
-            <Link className='post-detail' to={`/posts/${post.id}`}><h4>{post.title}</h4></Link>
+          {posts.map( (post) => (
+            <List.Item key={post.id}>
 
-            <p><span>{(new Date(Number(post.timestamp))).toString().substr(0, 25)}</span> by <span>{post.author}</span></p>
-            <p>{post.body}</p>
-            <p>
-              <span>{post.category} </span>
-              <span>{post.voteScore} </span>
-              <VoteButton id={post.id} option={'upVote'} onClickButton={votePost} />
-              <VoteButton id={post.id} option={'downVote'} onClickButton={votePost} />
-            </p>
-          </li>
-        ))}
+              <Link className='post-detail' to={`/posts/${post.id}`}><h4>{post.title}</h4></Link>
 
-      </ul>
+              <p><span>{(new Date(Number(post.timestamp))).toString().substr(0, 25)}</span> by <span>{post.author}</span></p>
+              <p>{post.body}</p>
+              <p>
+                <span>{post.category} </span>
+                <span>{post.voteScore} </span>
+                <Button basic color='green' name={'upVote'} icon='like outline' value={post.id} onClick={(e, data)=>votePost(e, data)}/>
+                <Button basic color='red' name={'downVote'} icon='dislike outline' value={post.id} onClick={(e, data)=>votePost(e, data)}/>
+              </p>
+            </List.Item>
+          ))}
+
+        </List>
+      </div>
     )
   }
 }
@@ -73,8 +75,9 @@ function mapStateToProps({posts, sortMethod}){
 function mapDispatchToProps(dispatch){
   return {
     allPosts: () => dispatch(allPosts()),
-    votePost: (e) => dispatch(votePost(e.target.value, e.target.innerHTML)),
-    updateSortMethod: (e) => dispatch(updateSortMethod(e.target.value))
+    // the first parameter must be event, data must be the second
+    votePost: (e, data) => dispatch(votePost(data.value, data.name)),
+    updateSortMethod: (e) => dispatch(updateSortMethod(e.target.value)),
   }
 }
 

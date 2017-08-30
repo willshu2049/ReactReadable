@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { Button } from 'semantic-ui-react'
 
 import PostContent from './PostContent'
 import CommentsContent from './CommentsContent'
-import VoteButton from './VoteButton'
 import DeleteButton from './DeleteButton'
 
 import { fetchPost, votePost, deletePost } from '../actions/actions'
@@ -45,8 +45,8 @@ class PostDetail extends React.Component {
         <p>
           <span>{post.category} </span>
           <span>{post.voteScore} </span>
-          <VoteButton id={post.id} option={'upVote'} onClickButton={votePost} />
-          <VoteButton id={post.id} option={'downVote'} onClickButton={votePost} />
+          <Button basic color='green' name={'upVote'} icon='like outline' value={post.id} onClick={(e, data)=>votePost(e, data)}/>
+          <Button basic color='red' name={'downVote'} icon='dislike outline' value={post.id} onClick={(e, data)=>votePost(e, data)}/>
         </p>
       </div>
     )
@@ -63,7 +63,7 @@ function mapDispatchToProps(dispatch){
   return {
     fetchPost: (id) => dispatch(fetchPost(id)),
     deletePost: (id, callback) => dispatch(deletePost(id, callback)),
-    votePost: (e) => dispatch(votePost(e.target.value, e.target.innerHTML))
+    votePost: (e, data) => dispatch(votePost(data.value, data.name))
   }
 }
 

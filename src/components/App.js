@@ -15,11 +15,11 @@ class App extends Component {
 
   render() {
     return (
-      <div className='container'>
+      <div className='app-container'>
         <Header />
-          <Route path='/create' component={PostForm}/>
-          <Route path='/posts/:id' component={PostDetail}/>
-          <Route exact path='/' component={DefaultView}/>
+        <Route path='/create' component={PostForm}/>
+        <Route path='/posts/:id' component={PostDetail}/>
+        <Route exact path='/' component={DefaultView}/>
         <Footer />
       </div>
     )

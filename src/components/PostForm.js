@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
+import { Input, Dropdown } from 'semantic-ui-react'
 
 import { addPost, allCategories } from '../actions/actions'
 
@@ -14,18 +15,18 @@ class PostForm extends React.Component {
   renderInput(field){
 
     const { touched, error } = field.meta
-    const className = `form-group ${touched && error ? 'has-danger' : ''}`
+    const errorAttr = touched && error ? true : false
 
     return (
-      <div className={className}>
-        <label>{field.label}</label>
-        <input
+      <div>
+        <Input
           type='text'
-          className='form-control'
+          label={field.label}
+          error={errorAttr}
           placeholder={field.placeholder}
           {...field.input}
           />
-        <div className='form-control-feedback'>
+        <div>
           {touched ? error : ''}
         </div>
       </div>
@@ -35,21 +36,28 @@ class PostForm extends React.Component {
   renderSelection(field){
 
     const { touched, error } = field.meta
-    const className = `form-group ${touched && error ? 'has-danger' : ''}`
+    const errorAttr = touched && error ? true : false
+    const options = field.categories && field.categories.filter( ele => ele.name !== 'All').map( ele => {
+      ele["key"] = ele.path
+      ele["text"] = ele.path
+      ele["value"] = ele.path
+      delete ele.path
+      delete ele.name
+      return ele
+    })
+    console.log(options)
 
     return (
-      <div className={className}>
-        <label>{field.label}</label>
-        <select
-          {...field.input}
-          value={field.input.value || ''}
-          className='form-control'>
-          <option disabled></option>
-          {field.categories && field.categories.map( ele => {
-            return (ele.name==='All') ? null : <option key={ele.name} value={ele.name}>{ele.name}</option>
-          })}
-        </select>
-        <div className='form-control-feedback'>
+      <div>
+        <Dropdown
+          selection
+          label={field.label}
+          options={options}
+          placeholder='Select Category'
+          error={errorAttr}
+          >
+        </Dropdown>
+        <div>
           {touched ? error : ''}
         </div>
       </div>
@@ -67,7 +75,7 @@ class PostForm extends React.Component {
     const { categories } = this.props.categories
 
     return (
-      <div>
+      <div className='post-form'>
         <h3>Add a new Post</h3>
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
           <Field

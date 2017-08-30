@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { List } from 'semantic-ui-react'
 
 import { allCategories, selectCategory } from '../actions/actions'
 
@@ -14,8 +15,8 @@ class CategoriesList extends React.Component {
     const { categories } = this.props.categories
     const { selectCategory } = this.props
     return (
-        <ul className='list-categories list-group col-sm-4'>
-          <li key='th-category' className='th-category list-group-item'>Category</li>
+        <List>
+          <List.Item key='th-category'>Category</List.Item>
           {/*
             If you get error:"can't read property map of undefined", then use 'categories &&' to check if categories exists.
             There may be different reasons. First reason may be because fetching Categories from remote server is async,
@@ -30,14 +31,13 @@ class CategoriesList extends React.Component {
             2. only input elements has event.target.value. Others elements has innerHTML
           */}
           {categories.map( category => (
-            <li
+            <List.Item
               key={category.name}
-              onClick={selectCategory}
-              className='list-group-item'>
+              onClick={selectCategory}>
               {category.name}
-            </li>
+            </List.Item>
           ))}
-        </ul>
+        </List>
     )
   }
 }

@@ -3,7 +3,7 @@ import React from 'react'
 function DeleteButton(props) {
   return (
     <button
-      className='btn btn-danger float-sm-right'
+      value={props.id}
       onClick={props.onClickButton}
       >
       Delete

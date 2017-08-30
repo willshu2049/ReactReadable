@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Grid } from 'semantic-ui-react'
 
 import CategoriesIndex from './CategoriesIndex'
 import PostsIndex from './PostsIndex'
@@ -8,13 +8,18 @@ class DefaultView extends React.Component {
 
   render () {
     return (
-      <div className="App row">
-        <CategoriesIndex />
-        <PostsIndex />
-        <div className='create-post'>
-          <Link to='/create'>Create Post</Link>
-        </div>
-      </div>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column width={1}></Grid.Column>
+          <Grid.Column width={4}>
+            <CategoriesIndex />
+          </Grid.Column>
+          <Grid.Column width={10}>
+            <PostsIndex />
+          </Grid.Column>
+          <Grid.Column width={1}></Grid.Column>
+        </Grid.Row>
+      </Grid>
     )
   }
 }

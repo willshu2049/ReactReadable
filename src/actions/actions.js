@@ -75,7 +75,7 @@ export function fetchPost(postID) {
 }
 
 export function deletePost(postID, callback) {
-  const request = ReadableAPI.deletePost(postID).then(callback)
+  ReadableAPI.deletePost(postID).then(callback)
   return {
     type: DELETE_POST,
   }
