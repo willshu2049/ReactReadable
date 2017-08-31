@@ -5,6 +5,7 @@ import '../App.css'
 
 import Header from './Header'
 import DefaultView from './DefaultView'
+import CategoryView from './CategoryView'
 import PostForm from './PostForm'
 import PostDetail from './PostDetail'
 import Footer from './Footer'
@@ -18,6 +19,7 @@ class App extends Component {
       <div className='app-container'>
         <Header />
         <Route path='/create' component={PostForm}/>
+        <Route path='/category/:category' component={CategoryView}/>
         <Route path='/posts/:id' component={PostDetail}/>
         <Route exact path='/' component={DefaultView}/>
         <Footer />

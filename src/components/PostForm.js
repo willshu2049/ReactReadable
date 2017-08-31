@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
-import { Input, Dropdown } from 'semantic-ui-react'
+import { Form, Button} from 'semantic-ui-react'
 
 import { addPost, allCategories } from '../actions/actions'
 
@@ -13,20 +13,20 @@ class PostForm extends React.Component {
   }
 
   renderInput(field){
-
     const { touched, error } = field.meta
     const errorAttr = touched && error ? true : false
 
     return (
       <div>
-        <Input
+        <Form.Input
+          style={{width: 40+'em'}}
           type='text'
           label={field.label}
           error={errorAttr}
           placeholder={field.placeholder}
           {...field.input}
           />
-        <div>
+        <div className='postForm-warning'>
           {touched ? error : ''}
         </div>
       </div>
@@ -34,37 +34,55 @@ class PostForm extends React.Component {
   }
 
   renderSelection(field){
-
     const { touched, error } = field.meta
     const errorAttr = touched && error ? true : false
-    const options = field.categories && field.categories.filter( ele => ele.name !== 'All').map( ele => {
-      ele["key"] = ele.path
-      ele["text"] = ele.path
-      ele["value"] = ele.path
-      delete ele.path
-      delete ele.name
-      return ele
-    })
-    console.log(options)
 
+    // Non-semantic-ui way of constructing the dropdown
     return (
       <div>
-        <Dropdown
-          selection
-          label={field.label}
-          options={options}
-          placeholder='Select Category'
-          error={errorAttr}
+        <label><b>{field.label}</b></label>
+        <select
+          {...field.input}
+          value={field.input.value || ''}
+          style={{width: 40 + 'em', height: 2.5 +'em', marginBottom: 1 + 'em'}}
           >
-        </Dropdown>
-        <div>
+          <option disabled></option>
+          {field.categories && field.categories.map( ele => {
+            return (ele.name==='All') ? null : <option key={ele.name} value={ele.name}>{ele.name}</option>
+          })}
+        </select>
+        <div className='postForm-warning'>
           {touched ? error : ''}
         </div>
       </div>
     )
   }
 
-  onSubmit (values) {
+  renderTextArea(field){
+    const { touched, error } = field.meta
+    const errorAttr = touched && error ? true : false
+
+    // style={{width: 100+'px', height: 100+'px'}}
+
+    return (
+      <div>
+        <Form.TextArea
+          style={{width: 40+'em', minHeight: 20 +'em'}}
+          autoHeight
+          type='text'
+          label={field.label}
+          error={errorAttr}
+          placeholder={field.placeholder}
+          {...field.input}
+          />
+        <div  className='postForm-warning'>
+          {touched ? error : ''}
+        </div>
+      </div>
+    )
+  }
+
+  onSubmit = values => {
     this.props.addPost(values, ()=>{
       this.props.history.push('/');
     });
@@ -77,7 +95,7 @@ class PostForm extends React.Component {
     return (
       <div className='post-form'>
         <h3>Add a new Post</h3>
-        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+        <Form onSubmit={handleSubmit(this.onSubmit)}>
           <Field
             name='category'
             component={this.renderSelection}
@@ -98,13 +116,13 @@ class PostForm extends React.Component {
             />
           <Field
             name='body'
-            component={this.renderInput}
+            component={this.renderTextArea}
             label='Message'
             placeholder='Write something...'
             />
-          <button type='submit' className='btn btn-primary'>Submit</button>
-          <Link to='/' className='btn btn-danger'>Cancel</Link>
-        </form>
+          <Button color='green' type='submit' icon='send' content=' Submit'/>
+          <Button as={Link} basic to='/' icon='undo' content=' Cancel' />
+        </Form>
       </div>
     )
   }

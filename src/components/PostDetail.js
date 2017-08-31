@@ -1,11 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { Button } from 'semantic-ui-react'
+import { Button, Grid } from 'semantic-ui-react'
 
 import PostContent from './PostContent'
 import CommentsContent from './CommentsContent'
-import DeleteButton from './DeleteButton'
 
 import { fetchPost, votePost, deletePost } from '../actions/actions'
 
@@ -36,19 +35,27 @@ class PostDetail extends React.Component {
     }
 
     return (
-      <div className='post-detail'>
-        <Link to='/' className='back-to-default'>Go Back</Link>
-        <DeleteButton onClickButton={()=>this.onDeleteClick()}/>
-        <h4>{post.title}</h4>
-        <p><span>{(new Date(Number(post.timestamp))).toString().substr(0, 25)}</span> by <span>{post.author}</span></p>
-        <p>{post.body}</p>
-        <p>
-          <span>{post.category} </span>
-          <span>{post.voteScore} </span>
-          <Button basic color='green' name={'upVote'} icon='like outline' value={post.id} onClick={(e, data)=>votePost(e, data)}/>
-          <Button basic color='red' name={'downVote'} icon='dislike outline' value={post.id} onClick={(e, data)=>votePost(e, data)}/>
-        </p>
-      </div>
+      <Grid stackable>
+        <Grid.Row>
+          <Grid.Column width={1}></Grid.Column>
+          <Grid.Column width={14}>
+            <div className='post-detail'>
+              <Link to='/' className='back-to-default'>Go Back</Link>
+              <Button onClick={()=>this.onDeleteClick()} icon='delete' content='Delete'/>
+              <h4>{post.title}</h4>
+              <p><span>{(new Date(Number(post.timestamp))).toString().substr(0, 25)}</span> by <span>{post.author}</span></p>
+              <p>{post.body}</p>
+              <p>
+                <span>{post.category} </span>
+                <span>{post.voteScore} </span>
+                <Button basic color='green' name={'upVote'} icon='like outline' value={post.id} onClick={(e, data)=>votePost(e, data)}/>
+                <Button basic color='red' name={'downVote'} icon='dislike outline' value={post.id} onClick={(e, data)=>votePost(e, data)}/>
+              </p>
+            </div>
+          </Grid.Column>
+          <Grid.Column width={1}></Grid.Column>
+        </Grid.Row>
+      </Grid>
     )
   }
 }

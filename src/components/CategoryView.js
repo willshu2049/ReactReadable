@@ -5,14 +5,16 @@ import { Grid } from 'semantic-ui-react'
 import CategoriesIndex from './CategoriesIndex'
 import PostsIndex from './PostsIndex'
 
-import { allCategories, allPosts } from '../actions/actions'
+import { allCategories, selectCategory } from '../actions/actions'
 
 class DefaultView extends React.Component {
 
-  // After page load, send an action to request for all categories and posts
+  // After page load, send an action to request for all categories but specific posts
   componentDidMount() {
-    this.props.allPosts()
+    const { category }=this.props.match.params
+
     this.props.allCategories()
+    this.props.selectCategory(category)
   }
 
   render () {
@@ -36,7 +38,7 @@ class DefaultView extends React.Component {
 function mapDispatchToProps(dispatch){
   return {
     allCategories: () => dispatch(allCategories()),
-    allPosts: () => dispatch(allPosts()),
+    selectCategory: (category) => dispatch(selectCategory(category)),
   }
 }
 

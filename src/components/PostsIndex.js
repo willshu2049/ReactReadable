@@ -2,17 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
-import { Button, List } from 'semantic-ui-react'
+import { Button, Form, Grid, Statistic, Icon, Segment, Header } from 'semantic-ui-react'
 
-import { allPosts, votePost, updateSortMethod } from '../actions/actions'
+import { votePost, updateSortMethod } from '../actions/actions'
 import { sortByVote, sortByDate } from '../utils/sort'
 
 class PostsIndex extends React.Component {
-
-  // After page load, send an action to request for all posts
-  componentDidMount() {
-    this.props.allPosts()
-  }
 
   render () {
     const { votePost, sortMethod, updateSortMethod } = this.props
@@ -28,39 +23,44 @@ class PostsIndex extends React.Component {
     posts && (sortMethod === 'voteScore') ? posts.sort(sortByVote) : posts.sort(sortByDate)
 
     return (
-      <div>
-        <Link to='/create'>Create Post</Link>
+      <Grid>
 
-        <List>
+        <Grid.Row>
+          <Grid.Column width={12}>
+            <Button color='blue' icon='add' content='New Post' as={Link} to='/create'></Button>
+          </Grid.Column>
+          <Grid.Column style={{display: 'inline-block'}} width={4}>
+            <Form
+              style={{display: 'inline-block'}}
+              >
+              <select
+                value={sortMethod}
+                onChange={updateSortMethod}
+                style={{width: 8 + 'em', height: 2.5 +'em', display: 'inline-block'}}
+                >
+                <option value='voteScore'>Top Score</option>
+                <option value='timestamp'>Most Recent</option>
+              </select>
+            </Form>
+          </Grid.Column>
+        </Grid.Row>
 
-          <List.Item
-            key='th-posts'>
-            <span>Posts </span>
-            <span>Sort By </span>
-            <select value={sortMethod} onChange={updateSortMethod}>
-              <option value='voteScore'>Top Score</option>
-              <option value='timestamp'>Most Recent</option>
-            </select>
-          </List.Item>
+        {posts.map( (post) => (
+          <Grid.Row key={post.id}>
+            <Segment basic style={{marginBottom: 0 + 'px'}}>
+              <Statistic horizontal value={post.voteScore} label='likes' style={{display: 'block'}} />
+              <Button basic color='green' name={'upVote'} icon='like outline' value={post.id} onClick={(e, data)=>votePost(e, data)}/>
+              <Button basic color='red' name={'downVote'} icon='dislike outline' value={post.id} onClick={(e, data)=>votePost(e, data)}/>
+            </Segment>
+            <Grid.Column verticalAlign='middle' width={12}>
+              <p className='post-top-row'><Icon name='user'/>{post.author}<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><Icon name='clock'/>{(new Date(Number(post.timestamp))).toString().substr(0, 21)}</p>
+              <Link className='post-detail' to={`/posts/${post.id}`}>{post.title}</Link>
+              <Button style={{display:'block'}} compact>{post.category}</Button>
+            </Grid.Column>
+          </Grid.Row>
+        ))}
 
-          {posts.map( (post) => (
-            <List.Item key={post.id}>
-
-              <Link className='post-detail' to={`/posts/${post.id}`}><h4>{post.title}</h4></Link>
-
-              <p><span>{(new Date(Number(post.timestamp))).toString().substr(0, 25)}</span> by <span>{post.author}</span></p>
-              <p>{post.body}</p>
-              <p>
-                <span>{post.category} </span>
-                <span>{post.voteScore} </span>
-                <Button basic color='green' name={'upVote'} icon='like outline' value={post.id} onClick={(e, data)=>votePost(e, data)}/>
-                <Button basic color='red' name={'downVote'} icon='dislike outline' value={post.id} onClick={(e, data)=>votePost(e, data)}/>
-              </p>
-            </List.Item>
-          ))}
-
-        </List>
-      </div>
+      </Grid>
     )
   }
 }
@@ -74,7 +74,6 @@ function mapStateToProps({posts, sortMethod}){
 
 function mapDispatchToProps(dispatch){
   return {
-    allPosts: () => dispatch(allPosts()),
     // the first parameter must be event, data must be the second
     votePost: (e, data) => dispatch(votePost(data.value, data.name)),
     updateSortMethod: (e) => dispatch(updateSortMethod(e.target.value)),

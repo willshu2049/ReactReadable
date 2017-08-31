@@ -34,6 +34,9 @@ div.post-form {
   background-size: 28px;
   font-size: 0;
 }
+a.post-detail {
+  margin: 10px auto;
+}
 
 div.ui.segment.footer-container {
   margin-top: 4em;
@@ -41,6 +44,15 @@ div.ui.segment.footer-container {
 
 div.footer-content {
   margin: 2em 6.25% 2em 6.25%;
+}
+
+div.postForm-warning {
+   color: #e0b4b4;
+   margin-bottom: 1em;
+}
+
+p.post-top-row {
+  margin-bottom: 0;
 }
 
 form a {

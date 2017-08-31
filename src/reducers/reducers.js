@@ -13,6 +13,15 @@ function categories(state={categories:[]}, action) {
   }
 }
 
+function activeCategory(state='All', action) {
+  switch (action.type) {
+    case SELECT_CATEGORY:
+      return action.meta
+    default:
+      return state
+  }
+}
+
 function posts(state={}, action) {
   switch (action.type) {
     case ALL_POSTS:
@@ -78,6 +87,7 @@ function sortMethod(state='voteScore', action) {
 
 export default combineReducers({
   categories,
+  activeCategory,
   posts,
   sortMethod,
   form

@@ -26,12 +26,14 @@ export function allPosts() {
   }
 }
 
-export function selectCategory(category) {
-  const postsOfCategory = (category==='All')? ReadableAPI.allPosts(): ReadableAPI.postsOfCategory(category)
+export function selectCategory(category, callback) {
+  const postsOfCategory = (category==='All')? ReadableAPI.allPosts().then(callback): ReadableAPI.postsOfCategory(category).then(callback)
   return {
     type: SELECT_CATEGORY,
     // redux-promise checks if an action has a payload and then if the payload is a promise. so you can only use 'payload' as key here
-    payload: postsOfCategory
+    payload: postsOfCategory,
+    // https://github.com/acdlite/flux-standard-action
+    meta: category
   }
 }
 
