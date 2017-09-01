@@ -33,13 +33,13 @@ export const addPost = (id, timestamp, title, body, author, category) =>
   }).then(res => res.json())
     .then(data => data)
 
-export const fetchPost = (postID) =>
-  fetch(`${api}/posts/${postID}`, { headers: { 'Authorization': token }})
+export const fetchPost = (postId) =>
+  fetch(`${api}/posts/${postId}`, { headers: { 'Authorization': token }})
     .then(res => res.json())
     .then(data => data)
 
-export const votePost = (postID, option) =>
-  fetch(`${api}/posts/${postID}`, {
+export const votePost = (postId, option) =>
+  fetch(`${api}/posts/${postId}`, {
     method: 'POST',
     headers: {
       'Authorization': token,
@@ -49,19 +49,19 @@ export const votePost = (postID, option) =>
   }).then(res => res.json())
     .then(data => data)
 
-export const editPost = (post) =>
-  fetch(`${api}/posts/${post.id}`, {
+export const editPost = (id, title, body) =>
+  fetch(`${api}/posts/${id}`, {
     method: 'PUT',
     headers: {
       'Authorization': token,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ title: `${post.title}`, body: `${post.body}` })
+    body: JSON.stringify({ title: `${title}`, body: `${body}` })
   }).then(res => res.json())
     .then(data => data)
 
-export const deletePost = (postID) =>
-  fetch(`${api}/posts/${postID}`, {
+export const deletePost = (postId) =>
+  fetch(`${api}/posts/${postId}`, {
     method: 'DELETE',
     headers: {
       'Authorization': token,
@@ -72,35 +72,35 @@ export const deletePost = (postID) =>
      * and I saw there that the function that disables a post, setting the "deleted" field as "true", it returns a single value.
      * It doesn't return an object like other functions are doing. That means, what comes as a response of the promise we're using here on the ReadableAPI is not a JSON object,
      * it's just the postId that we deleted. We were trying to do `res.json()` and that gave us the error `Unexpected end of JSON input` —
-     * I guess that's simply because the variable `res` is not a JSON object. So, doing `res => res` works as expected, and what you get is the PostID
+     * I guess that's simply because the variable `res` is not a JSON object. So, doing `res => res` works as expected, and what you get is the PostId
      */
    }).then(res => res.json)
     .then(data => data)
 
 // COMMENTS METHODS
-export const allCommentsOfPost = (postID) =>
-  fetch(`${api}/posts/${postID}/comments`, { headers: { 'Authorization': token }})
+export const allCommentsOfPost = (postId) =>
+  fetch(`${api}/posts/${postId}/comments`, { headers: { 'Authorization': token }})
     .then(res => res.json())
     .then(data => data)
 
-export const addComment = (postID, comment) =>
+export const addComment = (postId, comment) =>
   fetch(`${api}/comments`, {
     method: 'POST',
     headers: {
       'Authorization': token,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ id: `${Math.random().toString(36).substr(-8)}`, timestamp: `${Date.now()}`, body: `${comment.body}`, author: `${comment.author}`, parentId: `${postID}` })
+    body: JSON.stringify({ id: `${Math.random().toString(36).substr(-8)}`, timestamp: `${Date.now()}`, body: `${comment.body}`, author: `${comment.author}`, parentId: `${postId}` })
   }).then(res => res.json())
     .then(data => data)
 
-export const commentDetail = (commentID) =>
-  fetch(`${api}/comments/${commentID}`, { headers: { 'Authorization': token }})
+export const commentDetail = (commentId) =>
+  fetch(`${api}/comments/${commentId}`, { headers: { 'Authorization': token }})
     .then(res => res.json())
     .then(data => data)
 
-export const voteComment = (commentID, option) =>
-  fetch(`${api}/comments/${commentID}`, {
+export const voteComment = (commentId, option) =>
+  fetch(`${api}/comments/${commentId}`, {
     method: 'POST',
     headers: {
       'Authorization': token,
@@ -121,8 +121,8 @@ export const editComment = (comment) =>
   }).then(res => res.json())
     .then(data => data)
 
-export const deleteComment = (commentID) =>
-  fetch(`${api}/comments/${commentID}`, {
+export const deleteComment = (commentId) =>
+  fetch(`${api}/comments/${commentId}`, {
     method: 'DELETE',
     headers: {
       'Authorization': token,

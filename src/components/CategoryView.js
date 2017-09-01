@@ -2,8 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Grid } from 'semantic-ui-react'
 
-import CategoriesIndex from './CategoriesIndex'
-import PostsIndex from './PostsIndex'
+import CategoriesIndex from './DefaultView/CategoriesIndex'
+import PostsIndex from './DefaultView/PostsIndex'
 
 import { allCategories, selectCategory } from '../actions/actions'
 

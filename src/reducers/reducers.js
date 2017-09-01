@@ -2,7 +2,16 @@ import { combineReducers } from 'redux'
 import { reducer as form } from 'redux-form'
 import _ from 'lodash'
 
-import { ALL_CATEGORIES, ALL_POSTS, SELECT_CATEGORY, VOTE, ALL_COMMENTS_OF_POST, SORT_METHOD, ADD_POST, FETCH_POST, DELETE_POST } from '../actions/actions'
+import { ALL_CATEGORIES,
+  ALL_POSTS,
+  SELECT_CATEGORY,
+  VOTE,
+  ALL_COMMENTS_OF_POST,
+  SORT_METHOD,
+  ADD_POST,
+  FETCH_POST,
+  DELETE_POST,
+  EDIT_POST } from '../actions/actions'
 
 function categories(state={categories:[]}, action) {
   switch (action.type) {
@@ -54,11 +63,12 @@ function posts(state={}, action) {
             const keyB = b[orderOption];
             return (keyA < keyB) ? -1 : (keyA === keyB) ? 0 : 1
           }).reverse();
-          console.log(newState1)
           return newState1
           ```
       */
     case ADD_POST:
+      return state
+    case EDIT_POST:
       return state
     case DELETE_POST:
       return state
@@ -70,7 +80,8 @@ function posts(state={}, action) {
 function comments(state=[], action) {
   switch (action.type) {
     case ALL_COMMENTS_OF_POST:
-      return
+    console.log(action.payload)
+      return state
     default:
       return state
   }
@@ -90,5 +101,6 @@ export default combineReducers({
   activeCategory,
   posts,
   sortMethod,
-  form
+  form,
+  comments
 })

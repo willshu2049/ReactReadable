@@ -3,12 +3,13 @@ import * as ReadableAPI from '../utils/ReadableAPI'
 export const ALL_CATEGORIES = 'ALL_CATEGORIES'
 export const SELECT_CATEGORY = 'SELECT_CATEGORY'
 export const VOTE = 'VOTE'
-export const ALL_COMMENTS_OF_POST = 'ALL_COMMENTS_OF_POST'
 export const SORT_METHOD = 'SORT_METHOD'
 export const ADD_POST = 'ADD_POST'
 export const ALL_POSTS = 'ALL_POSTS'
 export const FETCH_POST = 'FETCH_POST'
 export const DELETE_POST = 'DELETE_POST'
+export const EDIT_POST = 'EDIT_POST'
+export const ALL_COMMENTS_OF_POST = 'ALL_COMMENTS_OF_POST'
 
 export function allCategories() {
   const allCategories = ReadableAPI.allCategories()
@@ -26,8 +27,8 @@ export function allPosts() {
   }
 }
 
-export function selectCategory(category, callback) {
-  const postsOfCategory = (category==='All')? ReadableAPI.allPosts().then(callback): ReadableAPI.postsOfCategory(category).then(callback)
+export function selectCategory(category) {
+  const postsOfCategory = (category==='All')? ReadableAPI.allPosts(): ReadableAPI.postsOfCategory(category)
   return {
     type: SELECT_CATEGORY,
     // redux-promise checks if an action has a payload and then if the payload is a promise. so you can only use 'payload' as key here
@@ -68,25 +69,33 @@ export function addPost(values, callback) {
   }
 }
 
-export function fetchPost(postID) {
-  const request = ReadableAPI.fetchPost(postID)
+export function editPost(id, values, callback) {
+  const request = ReadableAPI.editPost(id, values.title, values.body).then(callback);
+  return {
+    type: EDIT_POST,
+    payload: request
+  }
+}
+
+export function fetchPost(postId) {
+  const request = ReadableAPI.fetchPost(postId)
   return {
     type: FETCH_POST,
     payload: request
   }
 }
 
-export function deletePost(postID, callback) {
-  ReadableAPI.deletePost(postID).then(callback)
+export function deletePost(postId, callback) {
+  ReadableAPI.deletePost(postId).then(callback)
   return {
     type: DELETE_POST,
   }
 }
 
-// export function allCommentsOfPost() {
-//   const allCommentsOfPost = ReadableAPI.allCommentsOfPost()
-//   return {
-//     type: ALL_COMMENTS_OF_POST,
-//     payload: allCommentsOfPost
-//   }
-// }
+export function allCommentsOfPost(postId) {
+  const allCommentsOfPost = ReadableAPI.allCommentsOfPost(postId)
+  return {
+    type: ALL_COMMENTS_OF_POST,
+    payload: allCommentsOfPost
+  }
+}

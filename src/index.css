@@ -8,9 +8,18 @@ body {
   margin-top: 4em;
 }
 
+.fixed.menu {}
+
 div.icon-container {
   margin-left: 6.25%;
   margin-top: 0.8em;
+}
+
+div.header-contact-info {
+  margin-right: 6.25%;
+  margin-top: 0.2em;
+  position: absolute;
+  right: 0;
 }
 
 div.header-text {
@@ -21,21 +30,16 @@ div.post-form {
   margin-left: 6.25%;
 }
 
-.back-to-default {
-  display: block;
-  top: 20px;
-  left: 15px;
-  width: 50px;
-  height: 53px;
-  background: white;
-  background-image: url('./icons/arrow-back.svg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 28px;
-  font-size: 0;
+a.post-title {
+  font-size: 2em;
 }
-a.post-detail {
-  margin: 10px auto;
+
+p.authorAndDate {
+  font-size: 1.2em;
+}
+
+.ui.compact.button {
+  margin-top: 1em;
 }
 
 div.ui.segment.footer-container {
@@ -46,13 +50,13 @@ div.footer-content {
   margin: 2em 6.25% 2em 6.25%;
 }
 
+div.footer-contact-info {
+  margin: 2em 6.25% 2em 6.25%;
+}
+
 div.postForm-warning {
    color: #e0b4b4;
    margin-bottom: 1em;
-}
-
-p.post-top-row {
-  margin-bottom: 0;
 }
 
 form a {

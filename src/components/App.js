@@ -4,10 +4,10 @@ import { Route } from 'react-router-dom'
 import '../App.css'
 
 import Header from './Header'
-import DefaultView from './DefaultView'
+import DefaultView from './DefaultView/DefaultView'
 import CategoryView from './CategoryView'
-import PostForm from './PostForm'
-import PostDetail from './PostDetail'
+import PostDetailView from './PostDetailView/PostDetailView'
+import CreateEditView from './CreateEditView'
 import Footer from './Footer'
 
 class App extends Component {
@@ -18,10 +18,11 @@ class App extends Component {
     return (
       <div className='app-container'>
         <Header />
-        <Route path='/create' component={PostForm}/>
-        <Route path='/category/:category' component={CategoryView}/>
-        <Route path='/posts/:id' component={PostDetail}/>
-        <Route exact path='/' component={DefaultView}/>
+        <Route exact path='/' component={DefaultView} />
+        <Route path='/category/:category' component={CategoryView} />
+        <Route path='/posts/:id' component={PostDetailView} />
+        <Route path='/create' component={CreateEditView} />
+        <Route path='/edit/post/:id' component={CreateEditView} />
         <Footer />
       </div>
     )
