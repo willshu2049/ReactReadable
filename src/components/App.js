@@ -14,13 +14,15 @@ class App extends Component {
 
   // You can always put some components in parallel with Route components to make those components appear in every page.
 
+  // note that the names after ":" must be different, otherwise you may encounter flattenChildren error
+
   render() {
     return (
       <div className='app-container'>
         <Header />
         <Route exact path='/' component={DefaultView} />
         <Route path='/category/:category' component={CategoryView} />
-        <Route path='/posts/:id' component={PostDetailView} />
+        <Route path='/posts/:postId' component={PostDetailView} />
         <Route path='/create' component={CreateEditView} />
         <Route path='/edit/post/:id' component={CreateEditView} />
         <Footer />

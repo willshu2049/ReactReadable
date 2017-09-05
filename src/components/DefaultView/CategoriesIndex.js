@@ -15,7 +15,7 @@ class CategoriesList extends React.Component {
     const { categories } = this.props.categories
     const { activeCategory } = this.props
     return (
-      <Menu secondary vertical>
+      <Menu secondary compact vertical>
         <Header as={'h4'}><Icon name='unordered list' />Category</Header>
         {/*
           If you get error:"can't read property map of undefined", then use 'categories &&' to check if categories exists.
@@ -45,13 +45,7 @@ class CategoriesList extends React.Component {
   }
 }
 
-function mapStateToProps({categories, activeCategory}){
-  return {
-    categories,
-    activeCategory
-  }
-}
-
 export default connect(
-  mapStateToProps, { selectCategory }
+  ({categories, activeCategory})=>({categories, activeCategory}),
+  { selectCategory }
 )(CategoriesList);

@@ -1,7 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
+import { Field, reduxForm } from 'redux-form'
+import { Link } from 'react-router-dom'
 import { Form, Button} from 'semantic-ui-react'
 
 import { addPost, allCategories, fetchPost, editPost } from '../actions/actions'
@@ -9,7 +9,7 @@ import { addPost, allCategories, fetchPost, editPost } from '../actions/actions'
 class PostForm extends React.Component {
 
   componentDidMount(){
-    const id = this.props.match.params.id
+    const { id } = this.props.match.params
     this.props.allCategories()
     if (id) {
       this.props.fetchPost(id)
@@ -39,7 +39,8 @@ class PostForm extends React.Component {
 
   renderSelection(field){
     const { touched, error } = field.meta
-    const errorAttr = touched && error ? true : false
+    // error is an invalid props on <select> tab.
+    // const errorAttr = touched && error ? true : false
 
     // Non-semantic-ui way of constructing the dropdown
     return (
@@ -86,14 +87,15 @@ class PostForm extends React.Component {
     )
   }
 
-  onSubmit = values => {
-    const id = this.props.match.params.id
+  // onSubmit function takes in a parameter: values. Here you are doing destructuring.
+  onSubmit = ({title, body, author, category}) => {
+    const { id } = this.props.match.params
     if (id) {
-      this.props.editPost(id, values, ()=>{
-        this.props.history.push('/');
+      this.props.editPost(id, title, body, ()=>{
+        this.props.history.push(`/posts/${id}`);
       });
     } else {
-      this.props.addPost(values, ()=>{
+      this.props.addPost(title, body, author, category, ()=>{
         this.props.history.push('/');
       });
     }
@@ -102,6 +104,7 @@ class PostForm extends React.Component {
   render () {
     const { handleSubmit } = this.props
     const { categories } = this.props.categories
+    const { id } = this.props.match.params
 
     return (
       <div className='post-form'>
@@ -132,7 +135,7 @@ class PostForm extends React.Component {
             placeholder='Write something...'
             />
           <Button color='green' type='submit' icon='send' content=' Submit'/>
-          <Button as={Link} basic to='/' icon='undo' content=' Cancel' />
+          <Button as={Link} basic to={ (id) ? `/posts/${id}` : '/' } icon='undo' content=' Cancel' />
         </Form>
       </div>
     )
@@ -179,6 +182,6 @@ export default connect(
 )(reduxForm({
     validate,
     enableReinitialize : true,
-    form: 'theOneForm'
+    form: 'thePostForm'
   })(PostForm)
 );

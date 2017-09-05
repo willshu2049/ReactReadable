@@ -33,11 +33,4 @@ class DefaultView extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch){
-  return {
-    allCategories: () => dispatch(allCategories()),
-    allPosts: () => dispatch(allPosts()),
-  }
-}
-
-export default connect(null, mapDispatchToProps)(DefaultView);
+export default connect(null, {allCategories, allPosts})(DefaultView);

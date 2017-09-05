@@ -49,8 +49,8 @@ export const votePost = (postId, option) =>
   }).then(res => res.json())
     .then(data => data)
 
-export const editPost = (id, title, body) =>
-  fetch(`${api}/posts/${id}`, {
+export const editPost = (postId, title, body) =>
+  fetch(`${api}/posts/${postId}`, {
     method: 'PUT',
     headers: {
       'Authorization': token,
@@ -83,18 +83,18 @@ export const allCommentsOfPost = (postId) =>
     .then(res => res.json())
     .then(data => data)
 
-export const addComment = (postId, comment) =>
+export const addComment = (commentId, timestamp, body, author, postId) =>
   fetch(`${api}/comments`, {
     method: 'POST',
     headers: {
       'Authorization': token,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ id: `${Math.random().toString(36).substr(-8)}`, timestamp: `${Date.now()}`, body: `${comment.body}`, author: `${comment.author}`, parentId: `${postId}` })
+    body: JSON.stringify({ id: `${commentId}`, timestamp: `${timestamp}`, body: `${body}`, author: `${author}`, parentId: `${postId}` })
   }).then(res => res.json())
     .then(data => data)
 
-export const commentDetail = (commentId) =>
+export const fetchComment = (commentId) =>
   fetch(`${api}/comments/${commentId}`, { headers: { 'Authorization': token }})
     .then(res => res.json())
     .then(data => data)
@@ -110,14 +110,14 @@ export const voteComment = (commentId, option) =>
   }).then(res => res.json())
     .then(data => data)
 
-export const editComment = (comment) =>
-  fetch(`${api}/comments/${comment.id}`, {
+export const editComment = (commentId, timestamp, body) =>
+  fetch(`${api}/comments/${commentId}`, {
     method: 'PUT',
     headers: {
       'Authorization': token,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ timestamp: `${comment.timestamp}`, body: `${comment.body}` })
+    body: JSON.stringify({ timestamp: `${timestamp}`, body: `${body}` })
   }).then(res => res.json())
     .then(data => data)
 

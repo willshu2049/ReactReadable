@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import ReduxPromise from 'redux-promise'
+import ReduxThunk from 'redux-thunk'
 
 import './index.css';
 
@@ -11,7 +12,7 @@ import App from './components/App';
 import reducer from './reducers/reducers'
 
 const store = createStore(reducer, compose(
-  applyMiddleware(ReduxPromise),
+  applyMiddleware(ReduxPromise, ReduxThunk),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 ))
 

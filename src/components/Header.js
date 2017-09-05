@@ -4,7 +4,7 @@ import { Menu, Icon, Button } from 'semantic-ui-react'
 export default function Header() {
   return (
     <Menu fixed='top' size='large' className='menu'>
-      <div className='icon-container'>
+      <div className='header-icon-container'>
         <Icon name='book' size='large'/>
         <div className='header-text'>Readable</div>
       </div>

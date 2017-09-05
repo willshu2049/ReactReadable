@@ -5,13 +5,18 @@ import _ from 'lodash'
 import { ALL_CATEGORIES,
   ALL_POSTS,
   SELECT_CATEGORY,
-  VOTE,
-  ALL_COMMENTS_OF_POST,
+  VOTE_POST,
   SORT_METHOD,
   ADD_POST,
   FETCH_POST,
   DELETE_POST,
-  EDIT_POST } from '../actions/actions'
+  EDIT_POST,
+  ALL_COMMENTS_OF_POST,
+  VOTE_COMMENT,
+  DELETE_COMMENT,
+  ADD_COMMENT,
+  EDIT_COMMENT,
+} from '../actions/actions'
 
 function categories(state={categories:[]}, action) {
   switch (action.type) {
@@ -43,14 +48,15 @@ function posts(state={}, action) {
       }
     case SELECT_CATEGORY:
       return _.mapKeys(action.payload, 'id')
-    case VOTE:
-      const newStateArray=_.map(state)
-      return _.mapKeys(newStateArray.map( ele => {
-        if(ele.id === action.id){
-          (action.option === 'upVote') ? ele.voteScore++ : ele.voteScore--
+    case VOTE_POST:
+      const { postId, option } = action
+      return {
+        ...state,
+        [postId]:{
+          ...state[postId],
+          'voteScore': (option==='upVote') ? state[postId].voteScore+1 : state[postId].voteScore-1
         }
-        return ele
-      }), 'id')
+      }
       /* The sort() method sorts the elements of an array in place and returns the array.
           Therefore you need to use [...state] to avoid shallow comparison problem.
           However you need to use another state 'sortMethod' to keep track of sortMethod on the Main page.
@@ -66,22 +72,24 @@ function posts(state={}, action) {
           return newState1
           ```
       */
-    case ADD_POST:
-      return state
-    case EDIT_POST:
-      return state
     case DELETE_POST:
-      return state
-    default:
-      return state
-  }
-}
-
-function comments(state=[], action) {
-  switch (action.type) {
-    case ALL_COMMENTS_OF_POST:
-    console.log(action.payload)
-      return state
+      return {
+        ...state,
+        [action.postId]:{
+          ...state[action.postId],
+          'deleted': true
+        }
+      }
+    case ADD_POST:
+      return {
+        ...state,
+        [action.payload.id]: action.payload
+      }
+    case EDIT_POST:
+      return {
+        ...state,
+        [action.payload.id]: action.payload
+      }
     default:
       return state
   }
@@ -91,6 +99,43 @@ function sortMethod(state='voteScore', action) {
   switch (action.type) {
     case SORT_METHOD:
       return action.value
+    default:
+      return state
+  }
+}
+
+function comments(state={}, action) {
+  switch (action.type) {
+    case ALL_COMMENTS_OF_POST:
+    console.log(action.payload)
+      return _.mapKeys(action.payload, 'id')
+    case VOTE_COMMENT:
+      const { commentId, option } = action
+      return {
+        ...state,
+        [commentId]:{
+          ...state[commentId],
+          'voteScore': (option==='upVote') ? state[commentId].voteScore+1 : state[commentId].voteScore-1
+        }
+      }
+    case DELETE_COMMENT:
+      return {
+        ...state,
+        [action.commentId]:{
+          ...state[action.commentId],
+          'deleted': true
+        }
+      }
+    case ADD_COMMENT:
+      return {
+        ...state,
+        [action.payload.id]: action.payload
+      }
+    case EDIT_COMMENT:
+      return {
+        ...state,
+        [action.payload.id]: action.payload
+      }
     default:
       return state
   }
