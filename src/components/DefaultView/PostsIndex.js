@@ -1,22 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import _ from 'lodash'
+import { Link } from 'react-router-dom'
 import { Button, Form, Grid, Statistic, Icon, Segment, Divider } from 'semantic-ui-react'
 
-import { votePost, updateSortMethod, selectCategory } from '../../actions/actions'
+import CommentIndicator from './CommentIndicator'
+
+import { votePost, updatePostSortMethod, selectCategory } from '../../actions/actions'
 import { sortByVote, sortByDate } from '../../utils/sort'
 
 class PostsIndex extends React.Component {
 
   render () {
-    const { posts, votePost, sortMethod, updateSortMethod, selectCategory } = this.props
+    const { posts, votePost, postSortMethod, updatePostSortMethod, selectCategory } = this.props
 
     // unobjectify posts into an array, and filter out all deleted posts
-    const postsFiltered=_.filter(_.map(posts), post=>!post.deleted)
+    let postsFiltered=_.filter(_.map(posts), post=>!post.deleted)
 
     // sort the postsSorted locally in the component
-    postsFiltered && (sortMethod === 'voteScore') ? postsFiltered.sort(sortByVote) : postsFiltered.sort(sortByDate)
+    postsFiltered && (postSortMethod === 'voteScore') ? postsFiltered.sort(sortByVote) : postsFiltered.sort(sortByDate)
 
     return (
       <Grid>
@@ -30,8 +32,8 @@ class PostsIndex extends React.Component {
               style={{display: 'inline-block'}}
               >
               <select
-                value={sortMethod}
-                onChange={(e)=>updateSortMethod(e.target.value)}
+                value={postSortMethod}
+                onChange={(e)=>updatePostSortMethod(e.target.value)}
                 style={{width: 8 + 'em', height: 2.5 +'em', display: 'inline-block'}}
                 >
                 <option value='voteScore'>Top Score</option>
@@ -60,6 +62,7 @@ class PostsIndex extends React.Component {
                 <Button as={Link} to={`/category/${post.category}`} id={post.category} onClick={(e)=>selectCategory(e.target.id)} style={{display:'inline-block', width: 5 + 'em'}} compact>
                   {post.category}
                 </Button>
+                <CommentIndicator postId={post.id} />
               </p>
             </Grid.Column>
             <Divider horizontal>&nbsp;</Divider>
@@ -72,6 +75,6 @@ class PostsIndex extends React.Component {
 }
 
 export default connect(
-  ({posts, sortMethod})=>({posts, sortMethod}),
-  { votePost, updateSortMethod, selectCategory }
+  ({posts, postSortMethod})=>({posts, postSortMethod}),
+  { votePost, updatePostSortMethod, selectCategory }
 )(PostsIndex);

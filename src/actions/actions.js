@@ -4,7 +4,7 @@ import { reset } from 'redux-form'
 export const ALL_CATEGORIES = 'ALL_CATEGORIES'
 export const SELECT_CATEGORY = 'SELECT_CATEGORY'
 export const VOTE_POST = 'VOTE_POST'
-export const SORT_METHOD = 'SORT_METHOD'
+export const POST_SORT_METHOD = 'POST_SORT_METHOD'
 export const ADD_POST = 'ADD_POST'
 export const ALL_POSTS = 'ALL_POSTS'
 export const FETCH_POST = 'FETCH_POST'
@@ -15,6 +15,7 @@ export const VOTE_COMMENT = 'VOTE_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const EDIT_COMMENT = 'EDIT_COMMENT'
+export const COMMENT_SORT_METHOD = 'COMMENT_SORT_METHOD'
 
 export function allCategories() {
   const allCategories = ReadableAPI.allCategories()
@@ -54,9 +55,9 @@ export function votePost(postId, option) {
   }
 }
 
-export function updateSortMethod(value) {
+export function updatePostSortMethod(value) {
   return {
-    type: SORT_METHOD,
+    type: POST_SORT_METHOD,
     value
   }
 }
@@ -117,6 +118,13 @@ export function voteComment(commentId, option) {
     type: VOTE_COMMENT,
     commentId,
     option
+  }
+}
+
+export function updateCommentSortMethod(value){
+  return {
+    type: COMMENT_SORT_METHOD,
+    value
   }
 }
 

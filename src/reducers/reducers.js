@@ -6,7 +6,7 @@ import { ALL_CATEGORIES,
   ALL_POSTS,
   SELECT_CATEGORY,
   VOTE_POST,
-  SORT_METHOD,
+  POST_SORT_METHOD,
   ADD_POST,
   FETCH_POST,
   DELETE_POST,
@@ -16,6 +16,7 @@ import { ALL_CATEGORIES,
   DELETE_COMMENT,
   ADD_COMMENT,
   EDIT_COMMENT,
+  COMMENT_SORT_METHOD
 } from '../actions/actions'
 
 function categories(state={categories:[]}, action) {
@@ -59,7 +60,7 @@ function posts(state={}, action) {
       }
       /* The sort() method sorts the elements of an array in place and returns the array.
           Therefore you need to use [...state] to avoid shallow comparison problem.
-          However you need to use another state 'sortMethod' to keep track of sortMethod on the Main page.
+          However you need to use another state 'postSortMethod' to keep track of postSortMethod on the Main page.
           So to avoid redundance you may sort your list of posts locally when rendering. Below code is when you sort it in reducer
           ```
           case ORDER_BY:
@@ -95,9 +96,9 @@ function posts(state={}, action) {
   }
 }
 
-function sortMethod(state='voteScore', action) {
+function postSortMethod(state='voteScore', action) {
   switch (action.type) {
-    case SORT_METHOD:
+    case POST_SORT_METHOD:
       return action.value
     default:
       return state
@@ -107,8 +108,11 @@ function sortMethod(state='voteScore', action) {
 function comments(state={}, action) {
   switch (action.type) {
     case ALL_COMMENTS_OF_POST:
-    console.log(action.payload)
-      return _.mapKeys(action.payload, 'id')
+      const incomingComments=_.mapKeys(action.payload, 'id')
+      return {
+        ...state,
+        ...incomingComments
+      }
     case VOTE_COMMENT:
       const { commentId, option } = action
       return {
@@ -141,11 +145,21 @@ function comments(state={}, action) {
   }
 }
 
+function commentSortMethod(state='voteScore', action) {
+  switch (action.type) {
+    case COMMENT_SORT_METHOD:
+      return action.value
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   categories,
   activeCategory,
   posts,
-  sortMethod,
+  postSortMethod,
   form,
-  comments
+  comments,
+  commentSortMethod
 })
