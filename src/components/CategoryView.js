@@ -11,10 +11,10 @@ class DefaultView extends React.Component {
 
   // After page load, send an action to request for all categories but specific posts
   componentDidMount() {
-    const { category }=this.props.match.params
+    const { categoryview }=this.props.match.params
 
     this.props.allCategories()
-    this.props.selectCategory(category)
+    this.props.selectCategory(categoryview)
   }
 
   render () {

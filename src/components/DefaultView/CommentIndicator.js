@@ -13,9 +13,9 @@ class CommentIndicator extends React.Component {
   }
 
   render () {
-    const { postId, comments } = this.props
+    const { comments } = this.props
 
-    let commentIndicator = _.map(comments).filter(comment => comment.parentId===this.props.postId).length
+    let commentIndicator = _.map(comments).filter(comment => comment.parentId===this.props.postId && comment.deleted===false).length
 
     return (
       <span>

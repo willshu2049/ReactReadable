@@ -89,10 +89,10 @@ class PostForm extends React.Component {
 
   // onSubmit function takes in a parameter: values. Here you are doing destructuring.
   onSubmit = ({title, body, author, category}) => {
-    const { id } = this.props.match.params
+    const { cat, id } = this.props.match.params
     if (id) {
       this.props.editPost(id, title, body, ()=>{
-        this.props.history.push(`/posts/${id}`);
+        this.props.history.push(`/${cat}/${id}`);
       });
     } else {
       this.props.addPost(title, body, author, category, ()=>{
@@ -104,7 +104,7 @@ class PostForm extends React.Component {
   render () {
     const { handleSubmit } = this.props
     const { categories } = this.props.categories
-    const { id } = this.props.match.params
+    const { cat, id } = this.props.match.params
 
     return (
       <div className='post-form'>
@@ -135,7 +135,7 @@ class PostForm extends React.Component {
             placeholder='Write something...'
             />
           <Button color='green' type='submit' icon='send' content=' Submit'/>
-          <Button as={Link} basic to={ (id) ? `/posts/${id}` : '/' } icon='undo' content=' Cancel' />
+          <Button as={Link} basic to={ (id) ? `/${cat}/${id}` : '/' } icon='undo' content=' Cancel' />
         </Form>
       </div>
     )

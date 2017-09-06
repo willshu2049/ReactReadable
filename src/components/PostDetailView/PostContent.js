@@ -44,7 +44,7 @@ class PostContent extends React.Component {
             <Icon name='user'/>{post.author}<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <Icon name='clock'/>{(new Date(Number(post.timestamp))).toString().substr(0, 21)}<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <span>Category: </span>
-            <Button as={Link} to={`/category/${post.category}`} id={post.category} style={{width: 5 + 'em'}} compact>
+            <Button as={Link} to={`/${post.category}`} id={post.category} style={{width: 5 + 'em'}} compact>
               {post.category}
             </Button>
           </p>

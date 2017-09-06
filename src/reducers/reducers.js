@@ -40,7 +40,6 @@ function activeCategory(state='All', action) {
 function posts(state={}, action) {
   switch (action.type) {
     case ALL_POSTS:
-    console.log(action.payload)
       return _.mapKeys(action.payload, 'id')
     case FETCH_POST:
       return {

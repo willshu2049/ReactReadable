@@ -33,7 +33,7 @@ class CategoriesList extends React.Component {
         {categories.map( category => (
           <Menu.Item
             as={Link}
-            to={`/category/${category.name}`}
+            to={`/${category.name}`}
             key={category.name}
             onClick={(e)=>this.onClickCategory(e)}
             active={category.name === activeCategory}>

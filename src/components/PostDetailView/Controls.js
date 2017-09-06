@@ -14,7 +14,7 @@ class Controls extends React.Component {
   }
 
   onEditClick = () => {
-    this.props.history.push(`/edit/post/${this.props.match.params.postId}`)
+    this.props.history.push(`/edit/${this.props.match.params.category}/${this.props.match.params.postId}`)
   }
 
   render () {
