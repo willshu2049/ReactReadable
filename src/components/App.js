@@ -14,9 +14,7 @@ class App extends Component {
 
   // You can always put some components in parallel with Route components to make those components appear in every page.
 
-  // note that the names after ":" must be different, otherwise you may encounter flattenChildren error, or other errors.
-
-  // note there are two PostDetailView, one for CategoryView, one for DefaultView
+  // note there are two PostDetailView routes, one for CategoryView, one for DefaultView
 
   render() {
     return (
@@ -27,7 +25,7 @@ class App extends Component {
           <Route path='/edit/:cat/:id' component={CreateEditView} />
           <Route path='/:category/:postId/:categoryQuery' component={PostDetailView} />
           <Route path='/:category/:postId' component={PostDetailView} />
-          <Route path='/:categoryview' component={CategoryView} />
+          <Route path='/:category' component={CategoryView} />
           <Route exact path='/' component={DefaultView} />
         </Switch>
         <Footer />

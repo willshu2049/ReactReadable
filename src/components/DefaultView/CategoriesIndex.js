@@ -7,13 +7,9 @@ import { selectCategory } from '../../actions/actions'
 
 class CategoriesList extends React.Component {
 
-  onClickCategory = (e) => {
-    this.props.selectCategory(e.target.innerHTML)
-  }
-
   render () {
     const { categories } = this.props.categories
-    const { activeCategory } = this.props
+    const { activeCategory, selectCategory } = this.props
     return (
       <Menu secondary compact vertical>
         <Header as={'h4'}><Icon name='unordered list' />Category</Header>
@@ -35,7 +31,7 @@ class CategoriesList extends React.Component {
             as={Link}
             to={`/${category.name}`}
             key={category.name}
-            onClick={(e)=>this.onClickCategory(e)}
+            onClick={(e)=>selectCategory(e.target.innerHTML)}
             active={category.name === activeCategory}>
             {category.name}
           </Menu.Item>

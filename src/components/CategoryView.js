@@ -11,10 +11,10 @@ class DefaultView extends React.Component {
 
   // After page load, send an action to request for all categories but specific posts
   componentDidMount() {
-    const { categoryview }=this.props.match.params
+    const { category }=this.props.match.params
 
     this.props.allCategories()
-    this.props.selectCategory(categoryview)
+    this.props.selectCategory(category)
   }
 
   render () {
@@ -26,7 +26,7 @@ class DefaultView extends React.Component {
             <CategoriesIndex />
           </Grid.Column>
           <Grid.Column width={11}>
-            <PostsIndex categoryQuery={this.props.match.params.categoryview}/>
+            <PostsIndex categoryQuery={this.props.match.params.category}/>
           </Grid.Column>
           <Grid.Column width={1}></Grid.Column>
         </Grid.Row>
@@ -35,11 +35,4 @@ class DefaultView extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch){
-  return {
-    allCategories: () => dispatch(allCategories()),
-    selectCategory: (category) => dispatch(selectCategory(category)),
-  }
-}
-
-export default connect(null, mapDispatchToProps)(DefaultView);
+export default connect(null, {allCategories, selectCategory})(DefaultView);

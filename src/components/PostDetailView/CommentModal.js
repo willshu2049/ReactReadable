@@ -132,7 +132,7 @@ export default connect(
     enableReinitialize: true,
     // By default, the form data will be destroyed in the Redux store when the form is unmounted.
     // Therefore after submitting the first form, and re-opened the modal, the field would alway return 'undefined' instead of error, and the error message will not show up.
-    // You can disable this by passing destroyOnUnmount: true.
+    // You can disable this by passing destroyOnUnmount: false.
     destroyOnUnmount: false,
   })(CommentModal)
 );
