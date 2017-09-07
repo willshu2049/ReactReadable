@@ -56,7 +56,10 @@ class PostsIndex extends React.Component {
                 <Icon name='user'/>{post.author}<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <Icon name='clock'/>{(new Date(Number(post.timestamp))).toString().substr(0, 21)}
               </p>
-              <Link className='post-title' to={`/${post.category}/${post.id}`}>{post.title}</Link>
+              {(this.props.categoryQuery)?
+                <Link className='post-title' to={`/${post.category}/${post.id}/${this.props.categoryQuery}`}>{post.title}</Link> :
+                  <Link className='post-title' to={`/${post.category}/${post.id}`}>{post.title}</Link>
+              }
               <p className='authorAndDate'>
                 <span>Category: </span>
                 <Button as={Link} to={`/${post.category}`} id={post.category} onClick={(e)=>selectCategory(e.target.id)} style={{display:'inline-block', width: 5 + 'em'}} compact>

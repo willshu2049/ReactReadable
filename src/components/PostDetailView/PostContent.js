@@ -20,7 +20,25 @@ class PostContent extends React.Component {
     const post=posts[this.props.match.params.postId]
 
     if (!post) {
-      return <div>Loading...</div>
+      return (
+        <Grid.Row key='deleteMessage'>
+          <Grid.Column width={2}></Grid.Column>
+          <Grid.Column width={12}>
+            <Segment padded='very' color='red'>
+              <Header>
+                Either your internet is down. Or this post has been deleted!
+              </Header>
+              <Header>
+                In the latter case, please press 'Back' button on the Upper Left corner to go to the main page.
+              </Header>
+              <Header>
+                Thank you!
+              </Header>
+            </Segment>
+          </Grid.Column>
+          <Grid.Column width={2}></Grid.Column>
+        </Grid.Row>
+      )
     }
 
     return (
@@ -57,7 +75,7 @@ class PostContent extends React.Component {
 }
 
 export default connect(
-  // Do not use ownProps to convey only Post here. Otherwise the post will not re-render when post state changed
+  // Do not use ownProps to convey only post here. Otherwise the post will not re-render when post state changed
   ({posts}) =>({posts}),
   { fetchPost, votePost }
 )(PostContent);

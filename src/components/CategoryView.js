@@ -26,7 +26,7 @@ class DefaultView extends React.Component {
             <CategoriesIndex />
           </Grid.Column>
           <Grid.Column width={11}>
-            <PostsIndex />
+            <PostsIndex categoryQuery={this.props.match.params.categoryview}/>
           </Grid.Column>
           <Grid.Column width={1}></Grid.Column>
         </Grid.Row>

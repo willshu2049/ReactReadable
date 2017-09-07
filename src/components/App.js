@@ -16,6 +16,8 @@ class App extends Component {
 
   // note that the names after ":" must be different, otherwise you may encounter flattenChildren error, or other errors.
 
+  // note there are two PostDetailView, one for CategoryView, one for DefaultView
+
   render() {
     return (
       <div className='app-container'>
@@ -23,6 +25,7 @@ class App extends Component {
         <Switch>
           <Route path='/create' component={CreateEditView} />
           <Route path='/edit/:cat/:id' component={CreateEditView} />
+          <Route path='/:category/:postId/:categoryQuery' component={PostDetailView} />
           <Route path='/:category/:postId' component={PostDetailView} />
           <Route path='/:categoryview' component={CategoryView} />
           <Route exact path='/' component={DefaultView} />

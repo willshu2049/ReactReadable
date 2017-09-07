@@ -13,21 +13,17 @@ class Controls extends React.Component {
     })
   }
 
-  onEditClick = () => {
-    this.props.history.push(`/edit/${this.props.match.params.category}/${this.props.match.params.postId}`)
-  }
-
   render () {
     return (
       <Grid.Row>
         <Grid.Column width={2}></Grid.Column>
         <Grid.Column width={3}>
-          <Button basic as={Link} to='/' icon='caret left' content='Back' color='green' />
+          <Button as={Link} to={ (this.props.match.params.categoryQuery) ? `/${this.props.match.params.categoryQuery}` : '/'} basic icon='caret left' content='Back' color='green' />
         </Grid.Column>
         <Grid.Column style={{display: 'inline-block'}} floated='right' width={5}>
           <Button basic color='red' onClick={()=>this.onDeleteClick()} icon='delete' content='Delete'/>
           <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <Button basic color='blue' onClick={()=>this.onEditClick()} icon='edit' content='Edit'/>
+          <Button as={Link} to={`/edit/${this.props.match.params.category}/${this.props.match.params.postId}`} basic icon='edit' content='Edit' color='blue' />
         </Grid.Column>
       </Grid.Row>
     )

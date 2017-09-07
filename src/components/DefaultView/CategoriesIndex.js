@@ -30,7 +30,7 @@ class CategoriesList extends React.Component {
           It's passed to render() as props.
           2. only input elements has event.target.value. Others elements has innerHTML
         */}
-        {categories.map( category => (
+        {categories && categories.map( category => (
           <Menu.Item
             as={Link}
             to={`/${category.name}`}

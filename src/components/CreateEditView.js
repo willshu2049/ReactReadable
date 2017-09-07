@@ -92,7 +92,7 @@ class PostForm extends React.Component {
     const { cat, id } = this.props.match.params
     if (id) {
       this.props.editPost(id, title, body, ()=>{
-        this.props.history.push(`/${cat}/${id}`);
+        this.props.history.push(`/${cat}/${id}/${cat}`);
       });
     } else {
       this.props.addPost(title, body, author, category, ()=>{
@@ -135,7 +135,7 @@ class PostForm extends React.Component {
             placeholder='Write something...'
             />
           <Button color='green' type='submit' icon='send' content=' Submit'/>
-          <Button as={Link} basic to={ (id) ? `/${cat}/${id}` : '/' } icon='undo' content=' Cancel' />
+          <Button as={Link} basic to={ (id) ? `/${cat}/${id}/${cat}` : '/' } icon='undo' content=' Cancel' />
         </Form>
       </div>
     )
