@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
 import { Form, Button} from 'semantic-ui-react'
 
-import { addPost, allCategories, fetchPost, editPost } from '../actions/actions'
+import { addPost, allCategories, fetchPost, editPost } from '../actions'
 
 class PostForm extends React.Component {
 

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Grid, Button } from 'semantic-ui-react'
 
-import { deletePost } from '../../actions/actions'
+import { deletePost } from '../../actions'
 
 class Controls extends React.Component {
 

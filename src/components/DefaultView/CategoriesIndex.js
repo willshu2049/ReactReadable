@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Header, Menu, Icon } from 'semantic-ui-react'
 
-import { selectCategory } from '../../actions/actions'
+import { selectCategory } from '../../actions'
 
 class CategoriesList extends React.Component {
 

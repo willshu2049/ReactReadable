@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form'
 
 import { Form, Modal, Button } from 'semantic-ui-react'
 
-import { addComment, editComment } from '../../actions/actions'
+import { addComment, editComment } from '../../actions'
 
 
 class CommentModal extends React.Component {

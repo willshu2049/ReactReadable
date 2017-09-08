@@ -16,3 +16,6 @@ Feel free to submit a pull requests! How To Contribute:
 * make all changes on this branch
 * push this branch to your fork
 * submit a pull request
+
+## License
+Readable is released under the [MIT license](https://choosealicense.com).

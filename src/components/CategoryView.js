@@ -5,7 +5,7 @@ import { Grid } from 'semantic-ui-react'
 import CategoriesIndex from './DefaultView/CategoriesIndex'
 import PostsIndex from './DefaultView/PostsIndex'
 
-import { allCategories, selectCategory } from '../actions/actions'
+import { allCategories, selectCategory } from '../actions'
 
 class DefaultView extends React.Component {
 

@@ -6,7 +6,7 @@ import { Button, Form, Grid, Statistic, Icon, Segment, Divider } from 'semantic-
 
 import CommentIndicator from './CommentIndicator'
 
-import { votePost, updatePostSortMethod, selectCategory } from '../../actions/actions'
+import { votePost, updatePostSortMethod, selectCategory } from '../../actions'
 import { sortByVote, sortByDate } from '../../utils/sort'
 
 class PostsIndex extends React.Component {

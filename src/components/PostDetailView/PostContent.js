@@ -3,7 +3,7 @@ import { Grid, Segment, Button, Statistic, Icon, Header } from 'semantic-ui-reac
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { fetchPost, votePost } from '../../actions/actions'
+import { fetchPost, votePost } from '../../actions'
 
 class PostContent extends React.Component {
 

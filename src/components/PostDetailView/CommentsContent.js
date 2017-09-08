@@ -4,7 +4,7 @@ import _ from 'lodash'
 import CommentModal from './CommentModal'
 import { Grid, Header, Button, Comment, Form, Divider } from 'semantic-ui-react'
 
-import { allCommentsOfPost, voteComment, deleteComment, updateCommentSortMethod } from '../../actions/actions'
+import { allCommentsOfPost, voteComment, deleteComment, updateCommentSortMethod } from '../../actions'
 import { sortByVote, sortByDate } from '../../utils/sort'
 
 class CommentsContent extends React.Component {

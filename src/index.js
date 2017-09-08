@@ -9,11 +9,19 @@ import ReduxThunk from 'redux-thunk'
 import './index.css';
 
 import App from './components/App';
-import reducer from './reducers/reducers'
+import reducer from './reducers'
 
-const store = createStore(reducer, compose(
+// https://github.com/zalmoxisus/redux-devtools-extension
+// If you write the way below:
+// ..., compose(
+//   applyMiddleware(ReduxPromise, ReduxThunk),
+//   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+// )
+// It will work in Chrome but break in Safari.
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(reducer, composeEnhancers(
   applyMiddleware(ReduxPromise, ReduxThunk),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 ))
 
 
