@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Menu, Icon, Button } from 'semantic-ui-react'
 
 export default function Header() {
@@ -6,7 +7,7 @@ export default function Header() {
     <Menu fixed='top' size='large' className='menu'>
       <div className='header-icon-container'>
         <Icon name='book' size='large'/>
-        <div className='header-text'>Readable</div>
+        <Link className='header-text' to='/'>Readable</Link>
       </div>
       <div className='header-contact-info'>
         <Button circular color='black' icon='github' as='a' href='https://github.com/willshu2049' style={{marginRight: 1 + 'em'}} />

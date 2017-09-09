@@ -5,7 +5,7 @@ import { Grid } from 'semantic-ui-react'
 import CategoriesIndex from './CategoriesIndex'
 import PostsIndex from './PostsIndex'
 
-import { allCategories, allPosts } from '../../actions'
+import { allCategories, allPosts, selectCategory } from '../../actions'
 
 class DefaultView extends React.Component {
 
@@ -13,6 +13,7 @@ class DefaultView extends React.Component {
   componentDidMount() {
     this.props.allPosts()
     this.props.allCategories()
+    this.props.selectCategory('All')
   }
 
   render () {
@@ -33,4 +34,4 @@ class DefaultView extends React.Component {
   }
 }
 
-export default connect(null, {allCategories, allPosts})(DefaultView);
+export default connect(null, {allCategories, allPosts, selectCategory})(DefaultView);

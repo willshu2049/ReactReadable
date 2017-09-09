@@ -20,14 +20,16 @@ class App extends Component {
     return (
       <div className='app-container'>
         <Header />
-        <Switch>
-          <Route path='/create' component={CreateEditView} />
-          <Route path='/edit/:cat/:id' component={CreateEditView} />
-          <Route path='/:category/:postId/:categoryQuery' component={PostDetailView} />
-          <Route path='/:category/:postId' component={PostDetailView} />
-          <Route path='/:category' component={CategoryView} />
-          <Route exact path='/' component={DefaultView} />
-        </Switch>
+        <div className='main'>
+          <Switch>
+            <Route path='/create' component={CreateEditView} />
+            <Route path='/edit/:cat/:id' component={CreateEditView} />
+            <Route path='/:category/:postId/:categoryQuery' component={PostDetailView} />
+            <Route path='/:category/:postId' component={PostDetailView} />
+            <Route path='/:category' component={CategoryView} />
+            <Route exact path='/' component={DefaultView} />
+          </Switch>
+        </div>
         <Footer />
       </div>
     )

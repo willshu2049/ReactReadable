@@ -4,11 +4,9 @@ body {
   font-family: sans-serif;
 }
 
-.app-container {
-  margin-top: 4em;
+.main {
+  margin-top: 6em;
 }
-
-.fixed.menu {}
 
 div.header-icon-container {
   margin-left: 6.25%;
@@ -22,8 +20,13 @@ div.header-contact-info {
   right: 0;
 }
 
-div.header-text {
+a.header-text {
   display: inline-block;
+  color: black;
+}
+
+a.header-text:hover {
+  text-shadow: 0.3px 0.3px grey;
 }
 
 div.post-form {

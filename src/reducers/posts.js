@@ -16,6 +16,7 @@ export function posts(state={}, action) {
     case ALL_POSTS:
       return _.mapKeys(action.payload, 'id')
     case FETCH_POST:
+      console.log(action.payload)
       return {
         ...state,
         [action.payload.id]:action.payload

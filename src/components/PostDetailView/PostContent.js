@@ -7,39 +7,9 @@ import { fetchPost, votePost } from '../../actions'
 
 class PostContent extends React.Component {
 
-  componentDidMount(){
-    const { postId } = this.props.match.params
-    // check to see if there is any state. If not, fetch post of specific postId.
-    if ((this.props.post) === undefined){
-      this.props.fetchPost(postId)
-    }
-  }
-
   render () {
     const { posts, votePost } = this.props
     const post=posts[this.props.match.params.postId]
-
-    if (!post) {
-      return (
-        <Grid.Row key='deleteMessage'>
-          <Grid.Column width={2}></Grid.Column>
-          <Grid.Column width={12}>
-            <Segment padded='very' color='red'>
-              <Header>
-                Either your internet is down. Or this post has been deleted!
-              </Header>
-              <Header>
-                In the latter case, please press 'Back' button on the Upper Left corner to go to the main page.
-              </Header>
-              <Header>
-                Thank you!
-              </Header>
-            </Segment>
-          </Grid.Column>
-          <Grid.Column width={2}></Grid.Column>
-        </Grid.Row>
-      )
-    }
 
     return (
       <Grid.Row>
