@@ -7,7 +7,7 @@ import {
   ADD_COMMENT,
   EDIT_COMMENT,
   COMMENT_SORT_METHOD
-} from '../actions'
+} from '../actions/types'
 
 export function comments(state={}, action) {
   switch (action.type) {

@@ -1,12 +1,14 @@
 import * as ReadableAPI from '../utils/ReadableAPI'
 import { reset } from 'redux-form'
 
-export const ALL_COMMENTS_OF_POST = 'ALL_COMMENTS_OF_POST'
-export const VOTE_COMMENT = 'VOTE_COMMENT'
-export const DELETE_COMMENT = 'DELETE_COMMENT'
-export const ADD_COMMENT = 'ADD_COMMENT'
-export const EDIT_COMMENT = 'EDIT_COMMENT'
-export const COMMENT_SORT_METHOD = 'COMMENT_SORT_METHOD'
+import {
+  ALL_COMMENTS_OF_POST,
+  VOTE_COMMENT,
+  DELETE_COMMENT,
+  ADD_COMMENT,
+  EDIT_COMMENT,
+  COMMENT_SORT_METHOD
+} from './types'
 
 export function allCommentsOfPost(postId) {
   const allCommentsOfPost = ReadableAPI.allCommentsOfPost(postId)

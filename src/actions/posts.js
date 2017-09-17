@@ -1,13 +1,15 @@
 import * as ReadableAPI from '../utils/ReadableAPI'
 
-export const SELECT_CATEGORY = 'SELECT_CATEGORY'
-export const VOTE_POST = 'VOTE_POST'
-export const POST_SORT_METHOD = 'POST_SORT_METHOD'
-export const ADD_POST = 'ADD_POST'
-export const ALL_POSTS = 'ALL_POSTS'
-export const FETCH_POST = 'FETCH_POST'
-export const DELETE_POST = 'DELETE_POST'
-export const EDIT_POST = 'EDIT_POST'
+import {
+  SELECT_CATEGORY,
+  VOTE_POST,
+  POST_SORT_METHOD,
+  ADD_POST,
+  ALL_POSTS,
+  FETCH_POST,
+  DELETE_POST,
+  EDIT_POST
+} from './types'
 
 export function allPosts() {
   const allPosts = ReadableAPI.allPosts()

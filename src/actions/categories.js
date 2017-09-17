@@ -1,6 +1,8 @@
 import * as ReadableAPI from '../utils/ReadableAPI'
 
-export const ALL_CATEGORIES = 'ALL_CATEGORIES'
+import {
+  ALL_CATEGORIES
+} from './types'
 
 export function allCategories() {
   const allCategories = ReadableAPI.allCategories()

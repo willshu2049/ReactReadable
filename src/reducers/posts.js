@@ -9,7 +9,7 @@ import {
   FETCH_POST,
   DELETE_POST,
   EDIT_POST,
-} from '../actions'
+} from '../actions/types'
 
 export function posts(state={}, action) {
   switch (action.type) {

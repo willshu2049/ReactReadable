@@ -1,0 +1,17 @@
+export const ALL_CATEGORIES = 'ALL_CATEGORIES'
+
+export const SELECT_CATEGORY = 'SELECT_CATEGORY'
+export const VOTE_POST = 'VOTE_POST'
+export const POST_SORT_METHOD = 'POST_SORT_METHOD'
+export const ADD_POST = 'ADD_POST'
+export const ALL_POSTS = 'ALL_POSTS'
+export const FETCH_POST = 'FETCH_POST'
+export const DELETE_POST = 'DELETE_POST'
+export const EDIT_POST = 'EDIT_POST'
+
+export const ALL_COMMENTS_OF_POST = 'ALL_COMMENTS_OF_POST'
+export const VOTE_COMMENT = 'VOTE_COMMENT'
+export const DELETE_COMMENT = 'DELETE_COMMENT'
+export const ADD_COMMENT = 'ADD_COMMENT'
+export const EDIT_COMMENT = 'EDIT_COMMENT'
+export const COMMENT_SORT_METHOD = 'COMMENT_SORT_METHOD'

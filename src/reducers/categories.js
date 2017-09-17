@@ -1,7 +1,7 @@
 import {
   ALL_CATEGORIES,
   SELECT_CATEGORY,
-} from '../actions'
+} from '../actions/types'
 
 export function categories(state={categories:[]}, action) {
   switch (action.type) {
