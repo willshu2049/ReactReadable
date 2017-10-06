@@ -52,7 +52,6 @@ export function addPost(title, body, author, category, callback) {
   const postId = Math.random().toString(36).substr(-8)
   // Date.now() produces the UTC time. Use UTC time solves "time zone" problem.
   const timestamp = Date.now()
-  // update the state in the server. It seems after you go back the main page automatically updates to the new state. Is this the correct way of doing things?
   const request = ReadableAPI.addPost(postId, timestamp, title, body, author, category);
   return (dispatch) => {
     request.then((data)=>{
