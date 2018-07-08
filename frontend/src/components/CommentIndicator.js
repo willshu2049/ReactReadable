@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 import { Icon } from 'semantic-ui-react'
 
-import { allCommentsOfPost } from '../../actions'
+import { allCommentsOfPost } from '../actions'
 
 class CommentIndicator extends React.Component {
 

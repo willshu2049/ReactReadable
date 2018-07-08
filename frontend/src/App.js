@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
 
-import '../App.css'
+import './App.css'
 
-import Header from './Header'
-import DefaultView from './DefaultView/DefaultView'
-import CategoryView from './CategoryView'
-import PostDetailView from './PostDetailView/PostDetailView'
-import CreateEditView from './CreateEditView'
-import Footer from './Footer'
+import Header from './components/Header'
+import DefaultView from './routes/DefaultView'
+import CategoryView from './routes/CategoryView'
+import PostDetailView from './routes/PostDetailView'
+import CreateEditView from './routes/CreateEditView'
+import Footer from './components/Footer'
 
 class App extends Component {
 

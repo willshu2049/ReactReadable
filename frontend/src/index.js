@@ -8,7 +8,7 @@ import ReduxThunk from 'redux-thunk'
 
 import './index.css';
 
-import App from './components/App';
+import App from './App';
 import reducer from './reducers'
 
 // https://github.com/zalmoxisus/redux-devtools-extension

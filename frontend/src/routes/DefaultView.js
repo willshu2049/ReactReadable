@@ -2,19 +2,18 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Grid } from 'semantic-ui-react'
 
-import CategoriesIndex from './DefaultView/CategoriesIndex'
-import PostsIndex from './DefaultView/PostsIndex'
+import CategoriesIndex from '../components/CategoriesIndex'
+import PostsIndex from '../components/PostsIndex'
 
-import { allCategories, selectCategory } from '../actions'
+import { allCategories, allPosts, selectCategory } from '../actions'
 
 class DefaultView extends React.Component {
 
-  // After page load, send an action to request for all categories but specific posts
+  // After page load, send an action to request for all categories and posts
   componentDidMount() {
-    const { category }=this.props.match.params
-
+    this.props.allPosts()
     this.props.allCategories()
-    this.props.selectCategory(category)
+    this.props.selectCategory('All')
   }
 
   render () {
@@ -26,7 +25,7 @@ class DefaultView extends React.Component {
             <CategoriesIndex />
           </Grid.Column>
           <Grid.Column width={11}>
-            <PostsIndex categoryQuery={this.props.match.params.category}/>
+            <PostsIndex />
           </Grid.Column>
           <Grid.Column width={1}></Grid.Column>
         </Grid.Row>
@@ -35,4 +34,4 @@ class DefaultView extends React.Component {
   }
 }
 
-export default connect(null, {allCategories, selectCategory})(DefaultView);
+export default connect(null, {allCategories, allPosts, selectCategory})(DefaultView);

@@ -2,11 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Grid, Segment, Header, Icon, Loader } from 'semantic-ui-react'
 
-import Controls from './Controls'
-import PostContent from './PostContent'
-import CommentsContent from './CommentsContent'
+import Controls from '../components/PostDetailView/Controls'
+import PostContent from '../components/PostDetailView/PostContent'
+import CommentsContent from '../components/PostDetailView/CommentsContent'
 
-import { allPosts } from '../../actions'
+import { allPosts } from '../actions'
 
 class PostDetailView extends React.Component {
 
