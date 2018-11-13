@@ -4,8 +4,11 @@ const { Schema } = mongoose;
 const CommentSchema = new Schema({
     timestamp: String,
     body: String,
-    author: String,
     voteScore: Number,
+    author:{
+        type: Schema.Types.ObjectId,
+        ref:' user'
+    }
 });
 
 module.exports = CommentSchema;
