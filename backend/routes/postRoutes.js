@@ -2,20 +2,45 @@ const _ = require('lodash');
 const mongoose = require('mongoose');
 
 const Post = mongoose.model('post');
+const Category = mongoose.model('category');
+const User = mongoose.model('user');
 
 module.exports = app => {
-    // get a certain amount of recent posts
+    // get some recent posts
     app.get('/posts', async (req, res) => {
         const { page, count } = req.body;
         const posts = await Post.find({})
-                .skip(Post.count() - count*page)
-                .limit(count);
+            .skip(Post.count() - count*page)
+            .limit(count)
+            .populate('category')
+            .populate('author');
+        res.send(posts);
+    });
+    // get some posts of a category
+    app.get('/:category/posts', async (req, res) => {
+        const { params:{category}, body:{page, count} } = req;
+        // method one:
+        const id = Category.find({name:category})._id;
+        const posts = await Post.find({category:id})
+            .skip(Post.count() - count*page)
+            .limit(count)
+            .populate('category')
+            .populate('author');
+        // method two:
+        // const posts = await Post.find({})
+        //     .populate({
+        //         path:'category',
+        //         match:{name:category}
+        //     })
+        //     .skip(Post.count() - count*page)
+        //     .limit(count)
         res.send(posts);
     });
     // write a post
     app.post('/posts', async (req, res) => {
         const { timestamp, title, body, id, category } = req.body;
-        const id = Date.now();
+        const category = new Category({name: category});
+        const author = User.findById(id);
         const post = new Post({
             createdTime: timestamp,
             editedTime: null,
@@ -24,7 +49,7 @@ module.exports = app => {
             voteScore: 0,
             comments: [],
         });
-        post.author = id;
+        post.author = author;
         post.category = category;
 
         const response = await post.save();
