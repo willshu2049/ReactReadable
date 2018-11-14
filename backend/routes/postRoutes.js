@@ -7,7 +7,7 @@ const User = mongoose.model('user');
 
 module.exports = app => {
     // get some recent posts
-    app.get('/posts', async (req, res) => {
+    app.post('/posts', async (req, res) => {
         const { page, count } = req.body;
         const posts = await Post.find({})
             .skip(Post.count() - count*page)
@@ -17,7 +17,7 @@ module.exports = app => {
         res.send(posts);
     });
     // get some posts of a category
-    app.get('/:category/posts', async (req, res) => {
+    app.post('/:category/posts', async (req, res) => {
         const { params:{category}, body:{page, count} } = req;
         // method one:
         const id = Category.find({name:category})._id;
