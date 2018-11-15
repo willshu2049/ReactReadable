@@ -1,7 +1,7 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
-import postRoutes from './routes/postRoutes';
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const postRoutes = require('./routes/postRoutes');
 
 // App setup
 const app = express();
