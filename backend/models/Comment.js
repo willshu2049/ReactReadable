@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const CommentSchema = new Schema({
-    timestamp: String,
+    createdTime: String,
+    editedTime: String,
     body: String,
     voteScore: Number,
     author:{

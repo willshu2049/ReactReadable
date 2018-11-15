@@ -78,10 +78,10 @@ export const deletePost = (postId) =>
     .then(data => data)
 
 // COMMENTS METHODS
-export const allCommentsOfPost = (postId) =>
-  fetch(`${host}/posts/${postId}/comments`, { headers: { 'Authorization': token }})
-    .then(res => res.json())
-    .then(data => data)
+// export const allCommentsOfPost = (postId) =>
+//   fetch(`${host}/posts/${postId}/comments`, { headers: { 'Authorization': token }})
+//     .then(res => res.json())
+//     .then(data => data)
 
 export const addComment = (commentId, timestamp, body, author, postId) =>
   fetch(`${host}/comments`, {
@@ -94,10 +94,10 @@ export const addComment = (commentId, timestamp, body, author, postId) =>
   }).then(res => res.json())
     .then(data => data)
 
-export const fetchComment = (commentId) =>
-  fetch(`${host}/comments/${commentId}`, { headers: { 'Authorization': token }})
-    .then(res => res.json())
-    .then(data => data)
+// export const fetchComment = (commentId) =>
+//   fetch(`${host}/comments/${commentId}`, { headers: { 'Authorization': token }})
+//     .then(res => res.json())
+//     .then(data => data)
 
 export const voteComment = (commentId, option) =>
   fetch(`${host}/comments/${commentId}`, {
