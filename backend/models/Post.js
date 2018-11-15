@@ -19,4 +19,4 @@ const PostSchema = new Schema({
     comments: [CommentSchema],
 });
 
-const Post = mongoose.model('post', PostSchema);
+mongoose.model('post', PostSchema);

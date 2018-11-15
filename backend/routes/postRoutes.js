@@ -39,7 +39,7 @@ module.exports = app => {
     // write a post
     app.post('/posts', async (req, res) => {
         const { timestamp, title, body, id, category } = req.body;
-        const category = new Category({name: category});
+        const cat = new Category({name: category});
         const author = User.findById(id);
         const post = new Post({
             createdTime: timestamp,
@@ -50,7 +50,7 @@ module.exports = app => {
             comments: [],
         });
         post.author = author;
-        post.category = category;
+        post.category = cat;
 
         const response = await post.save();
 
@@ -69,18 +69,18 @@ module.exports = app => {
         await Post.findByIdAndUpdate(postId, { $inc: { voteScore: change } });
         const updatedPost = await Post.findById(postId);
         res.send(updatedPost);
-    })
+    });
     // edit a post by id
     app.put('/posts/:postId', async (req, res) => {
         const { params: { postId }, body: { title, body } } = req;
         await Post.findByIdAndUpdate(postId, { $set: { title, body } });
         const updatedPost = await Post.findById(postId);
         res.send(updatedPost);
-    })
+    });
     // delete a post by id
     app.delete('/posts/:postId', async (req, res) => {
         const { params: { postId } } = req;
         const deletedPost = Post.findByIdAndRemove(postId);
         res.status(204).send(deletedPost);
-    })
-}
+    });
+};

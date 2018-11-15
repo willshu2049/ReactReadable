@@ -5,4 +5,4 @@ const CategorySchema = new Schema({
     name:String,
 });
 
-const Category = mongoose.model('category', CategorySchema);
+mongoose.model('category', CategorySchema);
