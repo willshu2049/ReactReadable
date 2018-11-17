@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Post = mongoose.model('comment');
+const Post = mongoose.model('post');
 
 module.exports = app => {
     //  add a comment
