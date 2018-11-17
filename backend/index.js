@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const keys = require('./config/keys');
 require('./models/Category');
 require('./models/Post');
 require('./models/User');
@@ -13,7 +14,7 @@ const postRoutes = require('./routes/postRoutes');
 // App setup
 const app = express();
 if(process.env.NODE_ENV !== 'test'){
-    mongoose.connect('mongodb://localhost/readable');
+    mongoose.connect(keys.mongoURI);
 }
 app.use(bodyParser.json({type:'*/*'}));
 
