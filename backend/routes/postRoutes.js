@@ -37,10 +37,10 @@ module.exports = app => {
         res.send(posts);
     });
     // write a post
-    app.post('/posts', async (req, res) => {
+    app.post('/posts/add', async (req, res) => {
         const { timestamp, title, body, id, category } = req.body;
         const cat = new Category({name: category});
-        const author = User.findById(id);
+        const author = await User.findById(id);
         const post = new Post({
             createdTime: timestamp,
             editedTime: null,
