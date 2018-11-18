@@ -63,7 +63,7 @@ module.exports = app => {
         res.send(post);
     });
     // vote a post by id
-    app.post('/posts/:postId', async (req, res) => {
+    app.post('/posts/:postId/vote', async (req, res) => {
         const { params: { postId }, body: { option } } = req;
         const change = option === 'upvote' ? 1 : -1;
         await Post.findByIdAndUpdate(postId, { $inc: { voteScore: change } });
@@ -80,7 +80,7 @@ module.exports = app => {
     // delete a post by id
     app.delete('/posts/:postId', async (req, res) => {
         const { params: { postId } } = req;
-        const deletedPost = Post.findByIdAndRemove(postId);
+        const deletedPost = await Post.findByIdAndRemove(postId);
         res.status(204).send(deletedPost);
     });
 };
