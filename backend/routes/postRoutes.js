@@ -8,7 +8,7 @@ const Category = mongoose.model('category');
 module.exports = app => {
     // get some recent posts
     app.post('/posts', async (req, res) => {
-        const { page, count } = req.body;
+        const { body:{page, count} } = req;
         const posts = await Post.find({})
             .skip(Post.count() - count*page)
             .limit(count)
@@ -39,7 +39,7 @@ module.exports = app => {
     // write a post
     app.post('/posts/add', async (req, res) => {
         const { timestamp, title, body, id, category } = req.body;
-        const cat = new Category({name: category});
+        const existedCat = await Category.findOne({name:category});
         // const author = await User.findById(id);
         const post = new Post({
             createdTime: timestamp,
@@ -50,7 +50,7 @@ module.exports = app => {
             comments: [],
         });
         // post.author = author;
-        post.category = cat;
+        post.category = existedCat;
 
         const response = await post.save();
 
