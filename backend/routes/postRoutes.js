@@ -49,7 +49,6 @@ module.exports = app => {
             voteScore: 0,
             comments: [],
         });
-        console.log(post)
         // post.author = author;
         post.category = cat;
 
