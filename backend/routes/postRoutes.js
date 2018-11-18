@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const Post = mongoose.model('post');
 const Category = mongoose.model('category');
-const User = mongoose.model('user');
+// const User = mongoose.model('user');
 
 module.exports = app => {
     // get some recent posts
@@ -40,7 +40,7 @@ module.exports = app => {
     app.post('/posts/add', async (req, res) => {
         const { timestamp, title, body, id, category } = req.body;
         const cat = new Category({name: category});
-        const author = await User.findById(id);
+        // const author = await User.findById(id);
         const post = new Post({
             createdTime: timestamp,
             editedTime: null,
@@ -49,7 +49,8 @@ module.exports = app => {
             voteScore: 0,
             comments: [],
         });
-        post.author = author;
+        console.log(post)
+        // post.author = author;
         post.category = cat;
 
         const response = await post.save();
