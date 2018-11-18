@@ -12,8 +12,10 @@ module.exports = app => {
             createdTime: timestamp,
             body,
             voteScore:0,
-            author: id
+            // author: id
         });
+        const updatedPost =await post.save();
+        res.send(updatedPost);
     });
 
     // vote a comment
@@ -21,10 +23,10 @@ module.exports = app => {
         const {params:{commentId}, body:{option}}=req;
         const change = option === 'upvote' ? 1 : -1;
         await Post.findOneAndUpdate(
-            {'comments.id':commentId},
+            {'comments._id':commentId},
             { $inc: { 'comments.$.voteScore': change } }
         );
-        const post = Post.findOne({'comments.id':commentId});
+        const post = await Post.findOne({'comments._id':commentId});
         res.send(post);
     });
 
@@ -51,5 +53,7 @@ module.exports = app => {
                 comments:{_id: commentId}
             }}
         );
+        const updatedPost = await Post.findOne({'comments.id':commentId});
+        res.send(updatedPost);
     })
 }
