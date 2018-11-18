@@ -20,7 +20,7 @@ module.exports = app => {
 
     // vote a comment
     app.post('/comments/:commentId', async (req, res)=>{
-        const {params:{commentId}, body:{option}}=req;
+        const { params:{commentId}, body:{option} }=req;
         const change = option === 'upvote' ? 1 : -1;
         await Post.findOneAndUpdate(
             {'comments._id':commentId},
@@ -32,28 +32,28 @@ module.exports = app => {
 
     // edit a comment
     app.put('/comments/:commentId', async (req, res)=>{
-        const {params:{commentId},body:{timestamp,body}} = req;
+        const { params:{commentId}, body:{timestamp,body} } = req;
         await Post.findOneAndUpdate(
-            {'comments.id':commentId},
+            {'comments._id':commentId},
             {$set:{
                 'comments.$.editedTime':timestamp,
                 'comments.$.body':body
             }},
         );
-        const post = Post.findOne({'comments.id':commentId});
+        const post = await Post.findOne({'comments._id':commentId});
         res.send(post);
     })
 
     //  delete a comment
     app.delete('/comments/:commentId', async (req, res)=>{
-        const {params:{commentId}}=req;
-        const post = await Post.findOneAndUpdate(
-            {'comments.id':commentId},
+        const { params:{commentId} }=req;
+        await Post.findOneAndUpdate(
+            {'comments._id':commentId},
             {$pull:{
                 comments:{_id: commentId}
             }}
         );
-        const updatedPost = await Post.findOne({'comments.id':commentId});
+        const updatedPost = await Post.findOne({'comments._id':commentId});
         res.send(updatedPost);
     })
 }
