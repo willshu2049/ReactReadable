@@ -20,13 +20,13 @@ module.exports = app => {
     app.post('/:category/posts', async (req, res) => {
         const { params:{category}, body:{page, count} } = req;
         // method one:
-        const id = Category.find({name:category})._id;
-        const posts = await Post.find({category:id})
+        const existedCat = await Category.findOne({name:category});
+        const posts = await Post.find({category:existedCat._id})
             .skip(Post.count() - count*page)
             .limit(count)
             .populate('category')
             .populate('author');
-        // method two:
+        // method two: this syntax don't work out
         // const posts = await Post.find({})
         //     .populate({
         //         path:'category',
